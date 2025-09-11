@@ -1,0 +1,60 @@
+{
+  "name": "Full Stack Development",
+  "description": "Complete full-stack application development workflow",
+  "version": "1.0.0",
+  "stages": [
+    {
+      "name": "Architecture Design",
+      "mode": "architect",
+      "description": "Design system architecture and technical specifications",
+      "dependencies": [],
+      "outputs": ["architecture.md", "api-spec.yaml"]
+    },
+    {
+      "name": "Database Design",
+      "mode": "database",
+      "description": "Design database schema and data models",
+      "dependencies": ["Architecture Design"],
+      "outputs": ["schema.sql", "models.md"]
+    },
+    {
+      "name": "API Development",
+      "mode": "api",
+      "description": "Implement RESTful APIs and endpoints",
+      "dependencies": ["Database Design"],
+      "outputs": ["api/", "docs/api.md"]
+    },
+    {
+      "name": "Frontend Development",
+      "mode": "ui-ux",
+      "description": "Build user interface and experience",
+      "dependencies": ["API Development"],
+      "outputs": ["frontend/", "components/"]
+    },
+    {
+      "name": "Testing Suite",
+      "mode": "tdd",
+      "description": "Create comprehensive test coverage",
+      "dependencies": ["API Development", "Frontend Development"],
+      "outputs": ["tests/", "coverage-report.html"]
+    },
+    {
+      "name": "Security Review",
+      "mode": "security-review",
+      "description": "Security audit and vulnerability assessment",
+      "dependencies": ["Testing Suite"],
+      "outputs": ["security-audit.md", "vulnerability-report.md"]
+    },
+    {
+      "name": "DevOps Setup",
+      "mode": "devops",
+      "description": "CI/CD pipeline and deployment configuration",
+      "dependencies": ["Security Review"],
+      "outputs": [".github/workflows/", "docker-compose.yml", "deployment.md"]
+    }
+  ],
+  "parallel_stages": [
+    ["API Development", "Frontend Development"],
+    ["Testing Suite", "Documentation"]
+  ]
+}
