@@ -1,8 +1,8 @@
-# Leo 的 Claude Flow 極簡設定
+# Claude Flow 的極簡設定
 
 ## 🎯 這是什麼
 
-一個超簡化的 Claude Flow 設定，讓你：
+Claude Flow 設置複雜，我做了一個超簡化 Claude Flow 設定，讓你：
 
 - **記憶**：斷點續傳，不會忘記工作進度
 - **研究**：先讀懂需求再開發
