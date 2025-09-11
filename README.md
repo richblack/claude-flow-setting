@@ -13,16 +13,40 @@
 
 ## 🚀 立即開始
 
-### 新專案 - 一個指令搞定
+### 方法一：從 GitHub 安裝（需要公開儲存庫）
+
+> ⚠️ **注意**：如果儲存庫是私有的，請使用方法二
+
+#### 新專案 - 一個指令搞定
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/richblack/claude-flow-setting/main/install.sh | bash -s my_awesome_project
 ```
 
-### 現有專案 - 在專案目錄內執行
+#### 現有專案 - 在專案目錄內執行
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/richblack/claude-flow-setting/main/install.sh | bash
+```
+
+### 方法二：克隆後本地安裝（適用於私有儲存庫）
+
+#### 新專案
+
+```bash
+git clone https://github.com/richblack/claude-flow-setting.git temp-setup
+cd temp-setup
+./install.sh my_awesome_project
+cd ../my_awesome_project
+rm -rf ../temp-setup
+```
+
+#### 現有專案
+
+```bash
+git clone https://github.com/richblack/claude-flow-setting.git temp-setup
+temp-setup/install.sh
+rm -rf temp-setup
 ```
 
 ---
