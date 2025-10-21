@@ -6,32 +6,83 @@
 
 ### 第一次使用（只需一次）
 
+打開終端機，把這些檔案下載到家目錄，或你喜歡的目錄（改後面的 ``~/path/to/claude-flow-setting``）。
+
 ```bash
-# 下載到家目錄
 git clone https://github.com/richblack/claude-flow-setting.git ~/claude-flow-setting
 ```
 
 ### 以後任何專案
 
-```bash
-# 新專案
-mkdir my-project && cd my-project
-~/claude-flow-setting/init
+新專案設定
 
-# 現有專案
-cd existing-project
+```bash
+mkdir my-project && cd my-project
 ~/claude-flow-setting/init
 ```
 
+現有專案設定
+
+```bash
+cd existing-project
+~/claude-flow-setting/init
+```
+新舊專案指令都一樣，它會自己分辨。
+
 就這樣！✨
+
+**設定完成後**，你會得到一個完整的 Vibe Coding 開發環境（見下方說明）。
+
+---
+
+## 🌟 核心功能：Vibe Coding 工作流程
+
+受 Amazon Kiro IDE 啟發，本專案實現了**從自然語言需求到可執行任務**的完整工作流程。
+
+### 什麼是 Vibe Coding？
+
+就像和朋友聊天一樣描述你的想法，AI 會幫你轉換成清晰的開發計畫：
+
+```
+💬 自然語言需求（隨意描述你的想法）
+  ↓
+📋 User Story Mapping（理解用戶故事）
+  ↓
+✅ EARS 驗收標準（明確功能要求）
+  ↓
+🏗️ 系統設計（技術架構規劃）
+  ↓
+📝 任務分解（可執行的開發清單）
+  ↓
+🚀 開始開發
+```
+
+### 如何使用？
+
+設定完成後，在專案目錄中：
+
+1. **編輯需求**：用自然語言在 `rfp/requirements.md` 描述你的想法
+2. **告訴 Claude**：「請閱讀 rfp/ 開始開發」
+3. **AI 自動處理**：
+   - 理解你的需求
+   - 設計系統架構
+   - 分解成可執行任務
+   - 開始逐步實作
+
+### 你會得到什麼？
+
+完整的專案文檔：
+- `rfp/requirements.md` - User Stories + 驗收標準
+- `rfp/design.md` - 系統設計文件
+- `rfp/tasks.md` - 任務清單（可追蹤進度）
+
+更多詳細說明請參考 [rfp/README.md](rfp/README.md)
 
 ---
 
 ## 💡 這是什麼
 
 ClaudeFlow 很強大，ClaudeCode 使用者推薦，但操作複雜，這個 Claude-Flow-Setting 讓專案傻瓜化快速啓動，加一些開發時發現需要的功能，就是我個人的懶人設定。
-
-你不用是程式開發高手（那就不用這種極簡設定了），但不能害怕設定，對系統開發有些理解。
 
 ## 🎯 為什麼及是什麼
 
@@ -64,6 +115,10 @@ ClaudeFlow 很強大，ClaudeCode 使用者推薦，但操作複雜，這個 Cla
 
 ## 📦 設定完成後您會得到
 
+- 簡單指令操作 ClaudeFLow，包括把記憶儲存到內建資料庫、一次叫回上次的工作記憶、啓用多 AI Agent 模式來開發（及做任何事，例如寫簡報）。
+- AI 要人類決策或同意時，會打開系統通知，就算你切到別的畫面也會看到。
+- 它會用 Kiro 方式白話文撰寫需求，讓人類輕易理解，知道它要幹什麼。
+
 ```
 your-project/
 ├── rfp/
@@ -81,10 +136,7 @@ your-project/
 
 ### 1. 編輯需求
 
-```bash
-# 在 rfp/requirements.md 中描述您的需求
-vim rfp/requirements.md
-```
+增加 rfp/requirements.md 檔案，描述您的需求，儘量用結構化方式看到層級，有助於 AI 理解。
 
 ### 2. 開始開發
 
