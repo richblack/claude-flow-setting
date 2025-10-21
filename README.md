@@ -39,11 +39,20 @@ ClaudeFlow 很強大，推薦所有 ClaudeCode 使用者使用，但它複雜，
 
 ### 第一次使用（只需一次）
 
-打開終端機，把這些檔案下載到家目錄，或你喜歡的目錄（改後面的 ``~/path/to/claude-flow-setting``）。
+打開終端機，把這些檔案下載到家目錄，或你喜歡的目錄（改後面的 `~/path/to/claude-flow-setting`）。
 
 ```bash
 git clone https://github.com/richblack/claude-flow-setting.git ~/claude-flow-setting
 ```
+
+### 已經下載過？更新到最新版本
+
+```bash
+cd ~/claude-flow-setting
+git pull origin main
+```
+
+> **重要**：更新後您會獲得 `/vibe-coding` 指令和所有最新功能！
 
 ### 以後任何專案
 
