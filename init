@@ -150,6 +150,18 @@ EOF
 
 echo "✓ 已配置通知 hooks"
 
+# 2.5. 複製 vibe-coding 指令
+echo "📋 安裝 /vibe-coding 指令..."
+mkdir -p .claude/commands
+
+# 從 claude-flow-setting 複製 vibe-coding.md
+if [[ -f "$SCRIPT_DIR/.claude/commands/vibe-coding.md" ]]; then
+    cp "$SCRIPT_DIR/.claude/commands/vibe-coding.md" .claude/commands/
+    echo "✓ 已安裝 /vibe-coding 指令"
+else
+    echo "⚠️  找不到 vibe-coding.md（可能需要更新 claude-flow-setting）"
+fi
+
 # 3. 創建 CLAUDE.md（專案級別的 Claude 指令）
 echo "📝 創建 CLAUDE.md..."
 
