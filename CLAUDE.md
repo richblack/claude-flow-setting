@@ -33,10 +33,72 @@
 
 ---
 
+## 🎨 Vibe Coding - 從需求到實現的智能工作流
+
+### ✨ 什麼是 Vibe Coding？
+
+受 Amazon Kiro IDE 啟發，Vibe Coding 是一個**交互式工作流**，將自然語言需求轉換為結構化的實現計劃：
+
+```
+自然語言需求 → User Story Mapping → EARS 驗收標準 → 系統設計 → 任務分解 → 開始實現
+```
+
+### 🚀 快速開始
+
+在 Claude Code 中運行：
+
+```
+/vibe-coding
+```
+
+然後按照 AI 的引導，逐步完成 5 個階段。
+
+### 📋 工作流階段
+
+1. **理解需求** - AI 與您對話，理解並總結需求
+2. **User Story Mapping** - 生成用戶故事映射
+3. **EARS 驗收標準** - 添加詳細的驗收標準
+4. **系統設計** - 創建架構、組件、接口設計
+5. **任務分解** - 生成可執行的任務列表
+
+### 📁 生成的文件
+
+完成後，`rfp/` 目錄將包含：
+
+- `initial-requirements.md` - 原始需求
+- `requirements.md` - User Stories + EARS 驗收標準
+- `design.md` - 系統設計文檔
+- `tasks.md` - 任務分解列表
+
+### 💡 為什麼使用 Vibe Coding？
+
+✅ **清晰溝通** - 即使不懂程式的人也能理解
+✅ **結構化** - 從需求到實現的完整追蹤
+✅ **可追溯** - 每個任務都關聯到具體需求
+✅ **高效** - 配合 Claude Flow 的 MCP 工具，比 Kiro 更快
+
+### 🔗 與 Claude Flow 集成
+
+```bash
+# 使用記憶系統保存需求
+claude-flow memory store "project-requirements" "$(cat rfp/requirements.md)"
+
+# 基於設計優化架構
+claude-flow sparc run architect "基於 rfp/design.md 優化架構"
+
+# 使用 Hive-Mind 並行處理任務
+claude-flow hive init --topology mesh --agents 3
+```
+
+詳細說明請參閱 `rfp/README.md`。
+
+---
+
 ## 🤖 開發流程
 
 ### 1. 開始前必讀
 
+- **使用 Vibe Coding 創建需求**：運行 `/vibe-coding` 生成結構化需求
 - **永遠先閱讀 `rfp/` 目錄**：理解需求後再開始開發
 - **使用記憶系統**：重要決策和進度都要記錄
 
@@ -280,8 +342,10 @@ claude-flow analytics insights --timerange 7d
 
 ---
 
-**版本**: Claude Flow Minimal Setup v1.0
-**配置**: Official Hooks + SPARC Enhanced
-**功能**: 自動通知 + 記憶系統 + 17 Development Modes
+**版本**: Claude Flow Minimal Setup v2.0
+**配置**: Official Hooks + SPARC Enhanced + Vibe Coding
+**功能**: 自動通知 + 記憶系統 + 17 Development Modes + Vibe Coding 工作流
 
-**重點**: 通知系統已透過 `.claude/settings.json` 的 hooks 配置，不受上下文壓縮影響，穩定可靠！
+**重點**:
+- 通知系統已透過 `.claude/settings.json` 的 hooks 配置，不受上下文壓縮影響，穩定可靠！
+- 新增 Vibe Coding 工作流，從自然語言需求到可執行任務的完整流程！
