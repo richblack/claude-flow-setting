@@ -6,9 +6,9 @@
 
 ClaudeFlow 很強大，ClaudeCode 使用者推薦，但操作複雜，這個 Claude-Flow-Setting 讓專案傻瓜化快速啓動，加一些開發時發現需要的功能，就是我個人的懶人設定。
 
-## 🎯 為什麼及是什麼
+### 🎯 為什麼及是什麼
 
-### 為什麼做這個
+#### 為什麼做這個
 
 開發中的痛點：
 
@@ -16,7 +16,7 @@ ClaudeFlow 很強大，ClaudeCode 使用者推薦，但操作複雜，這個 Cla
 - **不通知**：ClaudeCode 在終端機運作，要人類許可時會停工等你，卻不提醒，如果你切到別的畫面，常常很久後才發現它什麼都沒做在等你。
 - **太深奧**：Kiro 寫的需求易懂，ClaudeFlow 的文件專業難懂。
 
-### Claude-Flow-Setting 是什麼
+#### Claude-Flow-Setting 是什麼
 
 它是一個**極簡化的 Claude Flow 開發環境設定工具**，讓您一鍵完成：
 
@@ -25,7 +25,7 @@ ClaudeFlow 很強大，ClaudeCode 使用者推薦，但操作複雜，這個 Cla
 - ✅ **開發指南**：自動生成 `CLAUDE.md` 指導 Claude 的開發流程
 - ✅ **零額外依賴**：使用系統原生通知工具
 
-### ClaudeFlow 是什麼
+#### ClaudeFlow 是什麼
 
 就我粗淺的瞭解，它是「工業化 AI Agent」，這是類比於只能簡單開發的「手工業化 AI Agent」，當然功能強大且複雜。
 
@@ -33,28 +33,9 @@ ClaudeFlow 很強大，ClaudeCode 使用者推薦，但操作複雜，這個 Cla
 - 它彌補 ClaudeCode 的不足，可以說是以開發為業者自己的「工廠」。
 - 類比現成服務如 Lovable 或 Manus 這種代理，但更強大，因它用強大的 Claude 模型，整合 74 個 MCP Server 的功能，就是擁有自己的 Lovable/ Manus。
 - 它是開源專案，你可以自行修改符合你的需求。
-
-
-### 📦 設定完成後您會得到
-
-- 簡單指令操作 ClaudeFLow，包括把記憶儲存到內建資料庫、一次叫回上次的工作記憶、啓用多 AI Agent 模式來開發（及做任何事，例如寫簡報）。
-- AI 要人類決策或同意時，會打開系統通知，就算你切到別的畫面也會看到。
-- 它會用 Kiro 方式白話文撰寫需求，讓人類輕易理解，知道它要幹什麼。
-
-```
-your-project/
-├── rfp/
-│   └── requirements.md      # 📝 需求文件（您編輯這個）
-├── CLAUDE.md                # 🤖 Claude 開發指南
-├── .claude/
-│   └── settings.json        # ⚙️  通知 hooks 配置
-├── .gitignore               # 🚫 Git 忽略規則
-└── README.md                # 📖 專案說明
-```
-
 ---
 
-## ⚡ 快速開始（兩步驟）
+## ⚡ 快速開始（2 步驟）
 
 ### 第一次使用（只需一次）
 
@@ -87,78 +68,139 @@ cd existing-project
 
 ---
 
-## 💡 使用流程（3 步驟）
+## 📖 一天的開發故事
 
-### 1. 編輯需求
+想像你是一位開發者，這是你使用 Claude Flow Setting 的一天...
 
-增加 rfp/requirements.md 檔案，描述您的需求，儘量用結構化方式看到層級，有助於 AI 理解。
+### 🌅 早上 9:00 - 繼續昨天的專案
 
-### 2. 開始開發
+```bash
+# 打開昨天的專案
+cd my-shop-project
 
-在 Claude Code 中開啟專案目錄，然後說：
-
+# 恢復記憶，讓 Claude 知道昨天做了什麼
+claude-flow memory recall "*"
 ```
-請閱讀 rfp/ 開始開發
+
+在 Claude Code 中說：「請閱讀 rfp/ 繼續昨天的工作」
+
+Claude 讀取 **Spec 文件**（`rfp/requirements.md`、`rfp/design.md`），理解需求後繼續開發購物車功能。
+
+### 🚀 早上 10:30 - 老闆要你開新專案
+
+老闆要你做一個部落格系統，你立刻：
+
+```bash
+# 建立新專案並快速設定
+mkdir blog-system && cd blog-system
+~/claude-flow-setting/init
 ```
 
-### 3. 自動通知
+30 秒後專案設定完成！你用自然語言在 `rfp/requirements.md` 寫下想法：
 
-當 Claude 需要您的注意時，會**自動彈出桌面通知**：
+```markdown
+我要做一個部落格系統，使用者可以註冊、發文、留言...
+```
 
-- 🔔 需要您確認決策時
-- ⏸️  等待超過 60 秒時
-- ✅ 任務完成時
+告訴 Claude：「請用 `/vibe-coding` 處理需求」
 
-**重點**：這些通知使用 Claude Code 官方 hooks，**不會因上下文壓縮而失效**！
+Claude 啟動 **Spec Driven 工作流程**：
+- 📋 產生 User Stories
+- ✅ 寫出 EARS 驗收標準
+- 🏗️ 設計系統架構
+- 📝 分解成任務清單
+
+5 分鐘後，完整的規格文件就在 `rfp/` 目錄裡了！
+
+### ☕ 上午 11:00 - 去喝咖啡，Claude 在工作
+
+你告訴 Claude：「請用 `sparc run architect` 優化架構設計」
+
+```bash
+claude-flow sparc run architect "根據 rfp/design.md 優化系統架構"
+```
+
+你去泡咖啡。3 分鐘後，**桌面通知彈出** 🔔：「Claude Code 需要您的注意」
+
+原來 Claude 在資料庫選擇上需要你決策。你快速回答後，繼續去喝咖啡。
+
+### 🎯 下午 2:00 - 接手同事的爛攤子
+
+同事離職，留下一個沒用 Claude Flow 的專案。你接手：
+
+```bash
+cd legacy-project
+~/claude-flow-setting/init
+```
+
+設定完成後，你用 `/vibe-coding` 反向工程：
+- 讓 Claude 分析現有程式碼
+- 產生缺失的 Spec 文件
+- 建立任務清單補完功能
+
+現在這個專案也變得井井有條了！
+
+### 🏗️ 下午 3:30 - 複雜功能用 Swarm 加速
+
+部落格的「推薦系統」很複雜，你決定用 **Swarm** 多 Agent 並行處理：
+
+```bash
+claude-flow swarm "實作部落格推薦系統" \
+  --strategy development \
+  --max-agents 3 \
+  --parallel
+```
+
+三個 AI Agents 同時工作：
+- Agent 1: 設計推薦演算法
+- Agent 2: 實作資料收集
+- Agent 3: 建立測試
+
+速度快了 3 倍！中間需要你確認時，**通知會自動彈出** 🔔
+
+### 🌆 傍晚 6:00 - 存檔下班
+
+```bash
+# 保存今天的所有進度
+claude-flow memory store "progress" "$(date): 完成購物車、建立部落格 Spec、接手舊專案、實作推薦系統"
+
+# 提交程式碼
+git add . && git commit -m "今日進度" && git push
+```
+
+明天來，只要 `claude-flow memory recall "*"`，就能無縫接續！
 
 ---
 
-## Vibe Coding 的 Spec Driven 工作流程
+## 💡 故事中的三個關鍵
 
-受 Amazon Kiro IDE 啟發，實現**從自然語言需求到可執行任務**的工作流程。
+### 1️⃣ Claude Flow 快速設定
 
-### 什麼是 Vibe Coding？
+- **任何專案**：`~/claude-flow-setting/init` 就搞定
+- **SPARC 模式**：單一功能用 `sparc run [role]`（如 architect、coder、tdd）
+- **Swarm 模式**：複雜任務用 `swarm` 多 Agent 並行
 
-就像和朋友聊天一樣描述你的想法，AI 會幫你轉換成清晰的開發計畫：
+詳細說明 → [Claude Flow 開發指令](#-claudeflow-開發指令)
 
-```
-💬 自然語言需求（隨意描述你的想法）
-  ↓
-📋 User Story Mapping（理解用戶故事）
-  ↓
-✅ EARS 驗收標準（明確功能要求）
-  ↓
-🏗️ 系統設計（技術架構規劃）
-  ↓
-📝 任務分解（可執行的開發清單）
-  ↓
-🚀 開始開發
-```
+### 2️⃣ Spec Driven 開發
 
-### 如何使用？
+- 用**自然語言**寫需求在 `rfp/requirements.md`
+- 執行 `/vibe-coding` 自動產生完整 Spec
+- 得到：User Stories + EARS 標準 + 系統設計 + 任務清單
 
-設定完成後，在專案目錄中：
+詳細說明 → [Vibe Coding 詳解](#-vibe-coding-詳解)
 
-1. **編輯需求**：用自然語言在 `rfp/requirements.md` 描述你的想法
-2. **告訴 Claude**：「請閱讀 rfp/ 開始開發」
-3. **AI 自動處理**：
-   - 理解你的需求
-   - 設計系統架構
-   - 分解成可執行任務
-   - 開始逐步實作
+### 3️⃣ 智能通知系統
 
-### 你會得到什麼？
+- 使用 Claude Code **官方 hooks**
+- 需要你時**自動彈出桌面通知** 🔔
+- **不受上下文壓縮影響**，永遠可靠
 
-完整的專案文檔：
-- `rfp/requirements.md` - User Stories + 驗收標準
-- `rfp/design.md` - 系統設計文件
-- `rfp/tasks.md` - 任務清單（可追蹤進度）
-
-更多詳細說明請參考 [rfp/README.md](rfp/README.md)
+詳細說明 → [通知系統運作原理](#-通知系統運作原理)
 
 ---
 
-## 📋 ClaudeFlow 開發簡單指令
+## 📚 Claude Flow 開發指令
 
 ### 記憶系統
 
@@ -195,6 +237,83 @@ claude-flow sparc run tdd "建立測試套件"
 # 安全稽核
 claude-flow sparc run security-review "檢查安全漏洞"
 ```
+
+**何時使用 SPARC？**
+- 單一、專注的開發任務
+- 需要特定角色專業知識（architect、coder、tdd、security 等）
+- 已有明確的任務定義
+
+### Swarm 模式
+
+多個 AI Agents 並行處理複雜任務：
+
+```bash
+# 基本使用
+claude-flow swarm "建立完整的用戶認證系統" \
+  --strategy development \
+  --max-agents 3 \
+  --parallel
+
+# 監控進度
+claude-flow swarm status
+```
+
+**何時使用 Swarm？**
+- 複雜、多面向的大型任務
+- 可以分解成多個並行子任務
+- 需要快速完成（多 Agent 並行）
+
+---
+
+## 🌟 Vibe Coding 詳解
+
+受 Amazon Kiro IDE 啟發，實現**從自然語言需求到可執行任務**的完整工作流程。
+
+### 什麼是 Vibe Coding？
+
+就像和朋友聊天一樣描述你的想法，AI 會幫你轉換成清晰的開發計畫：
+
+```
+💬 自然語言需求（隨意描述你的想法）
+  ↓
+📋 User Story Mapping（理解用戶故事）
+  ↓
+✅ EARS 驗收標準（明確功能要求）
+  ↓
+🏗️ 系統設計（技術架構規劃）
+  ↓
+📝 任務分解（可執行的開發清單）
+  ↓
+🚀 開始開發
+```
+
+### 如何使用？
+
+#### 方法 1: 使用 Slash Command（推薦）
+
+在 Claude Code 中執行：
+
+```
+/vibe-coding
+```
+
+然後按照提示逐步完成 5 個階段。
+
+#### 方法 2: 手動建立需求文件
+
+1. 在 `rfp/requirements.md` 用自然語言描述需求
+2. 告訴 Claude：「請閱讀 rfp/ 開始開發」
+3. AI 會理解需求、設計架構、分解任務
+
+### 你會得到什麼？
+
+完整的專案文檔：
+- `rfp/initial-requirements.md` - 原始需求
+- `rfp/requirements.md` - User Stories + EARS 驗收標準
+- `rfp/design.md` - 系統設計文件
+- `rfp/tasks.md` - 任務清單（可追蹤進度）
+
+更多詳細說明請參考 [rfp/README.md](rfp/README.md)
 
 ---
 
@@ -237,6 +356,7 @@ claude-flow sparc run security-review "檢查安全漏洞"
 - ✅ 不依賴 Claude 記得要發通知
 
 ---
+
 ## 🔧 安裝前置需求
 
 ### 必需
@@ -305,55 +425,7 @@ sudo apt-get install libnotify-bin
    ```
 ---
 
-## 🔗 相關資源
 
-- **Claude Flow**: https://github.com/ruvnet/claude-flow
-- **Claude Code 文檔**: https://docs.claude.com/en/docs/claude-code
-- **此專案**: https://github.com/richblack/claude-flow-setting
-
----
-
-## 📝 範例工作流程
-
-### 早上開始工作
-
-```bash
-cd my_project
-
-# 1. 恢復記憶
-claude-flow memory recall "*"
-
-# 2. 在 Claude Code 中開啟專案
-# 3. 告訴 Claude: "請閱讀 rfp/ 繼續昨天的工作"
-```
-
-### 開發過程
-
-Claude 會自動：
-- 📖 閱讀 `rfp/requirements.md` 理解需求
-- 🏗️ 規劃架構
-- 💻 編寫程式碼
-- 🧪 建立測試
-- 🔔 需要您時自動通知
-
-您只需要：
-- ✅ 回應 Claude 的問題
-- ✅ 檢視和確認變更
-- ✅ 提供反饋
-
-### 晚上結束
-
-```bash
-# 保存今日進度
-claude-flow memory store "daily" "$(date): 完成用戶認證和資料庫設計"
-
-# 提交變更
-git add .
-git commit -m "完成用戶認證功能"
-git push
-```
-
----
 
 ## ⚡ 核心理念
 
