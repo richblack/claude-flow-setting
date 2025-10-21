@@ -1,36 +1,66 @@
 # Claude Flow 極簡設定
 
-## 🎯 這是什麼
+> 本計劃 100% 由 Claude 開發，感謝它。
 
-一個**極簡化的 Claude Flow 開發環境設定工具**，讓您一鍵完成：
+## ⚡ 快速開始（兩步驟）
+
+### 第一次使用（只需一次）
+
+```bash
+# 下載到家目錄
+git clone https://github.com/richblack/claude-flow-setting.git ~/claude-flow-setting
+```
+
+### 以後任何專案
+
+```bash
+# 新專案
+mkdir my-project && cd my-project
+~/claude-flow-setting/init
+
+# 現有專案
+cd existing-project
+~/claude-flow-setting/init
+```
+
+就這樣！✨
+
+---
+
+## 💡 這是什麼
+
+ClaudeFlow 很強大，ClaudeCode 使用者推薦，但操作複雜，這個 Claude-Flow-Setting 讓專案傻瓜化快速啓動，加一些開發時發現需要的功能，就是我個人的懶人設定。
+
+你不用是程式開發高手（那就不用這種極簡設定了），但不能害怕設定，對系統開發有些理解。
+
+## 🎯 為什麼及是什麼
+
+### 為什麼做這個
+
+開發中的痛點：
+
+- **太複雜**：ClaudeFlow 功能太多，設定複雜，所以指令也非常多，實際上光要看懂它能做什麼就不容易了。
+- **不通知**：ClaudeCode 在終端機運作，要人類許可時會停工等你，卻不提醒，如果你切到別的畫面，常常很久後才發現它什麼都沒做在等你。
+- **太深奧**：Kiro 寫的需求易懂，ClaudeFlow 的文件專業難懂。
+
+### Claude-Flow-Setting 是什麼
+
+它是一個**極簡化的 Claude Flow 開發環境設定工具**，讓您一鍵完成：
 
 - ✅ **自動化通知**：使用 Claude Code 官方 hooks，需要您時自動彈出（不受上下文壓縮影響）
 - ✅ **需求驅動開發**：自動創建 `rfp/` 目錄存放需求文件
 - ✅ **開發指南**：自動生成 `CLAUDE.md` 指導 Claude 的開發流程
 - ✅ **零額外依賴**：使用系統原生通知工具
 
----
+### ClaudeFlow 是什麼
 
-## 🚀 立即開始
+就我粗淺的瞭解，它是「工業化 AI Agent」，這是類比於只能簡單開發的「手工業化 AI Agent」，當然功能強大且複雜。
 
-### 新專案
+- ClaudeCode 是 AI Agent，而 ClaudeFlow 是建築在它之上的 Multi-Agents。
+- 它彌補 ClaudeCode 的不足，可以說是以開發為業者自己的「工廠」。
+- 類比現成服務如 Lovable 或 Manus 這種代理，但更強大，因它用強大的 Claude 模型，整合 74 個 MCP Server 的功能，就是擁有自己的 Lovable/ Manus。
+- 它是開源專案，你可以自行修改符合你的需求。
 
-```bash
-git clone https://github.com/richblack/claude-flow-setting.git
-cd claude-flow-setting
-./quick-setup.sh my_awesome_project
-cd my_awesome_project
-```
-
-### 現有專案
-
-```bash
-git clone https://github.com/richblack/claude-flow-setting.git
-cd your-existing-project
-/path/to/claude-flow-setting/quick-setup.sh
-```
-
----
 
 ## 📦 設定完成後您會得到
 

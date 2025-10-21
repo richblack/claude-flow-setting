@@ -1,13 +1,11 @@
 #!/bin/bash
 
 # Claude Flow 極簡一鍵設定
-# 使用方式：./quick-setup.sh [project_name]
-# 新專案：./quick-setup.sh my_project
-# 現有專案：在專案目錄內執行 ./quick-setup.sh
+# 使用方式：~/claude-flow-setting/init
+# 自動判斷是新專案還是現有專案
 
 set -e
 
-PROJECT_NAME=${1:-""}
 CURRENT_DIR=$(basename "$(pwd)")
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -38,32 +36,30 @@ if [[ "$NOTIFIER" == "none" ]]; then
     echo ""
 fi
 
-# 如果有專案名稱，創建新專案
-if [[ -n "$PROJECT_NAME" ]]; then
-    echo "🚀 創建新專案: $PROJECT_NAME"
-
-    mkdir -p "$PROJECT_NAME"
-    cd "$PROJECT_NAME"
-
-    # 初始化 git（如果需要）
-    if [[ ! -d ".git" ]]; then
-        git init -q
-        echo "✓ 初始化 Git"
+# 自動判斷場景
+if [[ -f "CLAUDE.md" ]] || [[ -d ".claude" ]] || [[ -d "rfp" ]]; then
+    echo "⚠️  此專案似乎已經設定過 Claude Flow"
+    read -p "是否要重新設定？(y/N) " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        echo "❌ 取消設定"
+        exit 0
     fi
+fi
 
-else
-    echo "🔧 在現有專案 '$CURRENT_DIR' 中設定..."
+echo "🔧 在專案 '$CURRENT_DIR' 中設定..."
+
+# 初始化 git（如果需要）
+if [[ ! -d ".git" ]]; then
+    git init -q
+    echo "✓ 初始化 Git"
 fi
 
 # 1. 創建 rfp/ 目錄和需求範本
 echo "📁 創建 rfp/ 需求目錄..."
 mkdir -p rfp
 
-if [[ -n "$PROJECT_NAME" ]]; then
-    PROJ_NAME="$PROJECT_NAME"
-else
-    PROJ_NAME="$CURRENT_DIR"
-fi
+PROJ_NAME="$CURRENT_DIR"
 
 cat > rfp/requirements.md << EOF
 # $PROJ_NAME 專案需求
@@ -301,10 +297,10 @@ EOF
     echo "✓ 已創建 .gitignore"
 fi
 
-# 5. 創建簡單的 README（如果是新專案且不存在）
-if [[ -n "$PROJECT_NAME" ]] && [[ ! -f "README.md" ]]; then
+# 5. 創建簡單的 README（如果不存在）
+if [[ ! -f "README.md" ]]; then
     cat > README.md << EOF
-# $PROJECT_NAME
+# $PROJ_NAME
 
 > Claude Flow 開發專案
 
@@ -377,9 +373,3 @@ echo "   - 查看 CLAUDE.md 了解開發流程"
 echo "   - 查看 .claude/settings.json 了解通知配置"
 echo ""
 
-# 如果是新專案，顯示 cd 指令
-if [[ -n "$PROJECT_NAME" ]]; then
-    echo "開始工作："
-    echo "   cd $PROJECT_NAME"
-    echo "   # 用 Claude Code 開啟此目錄"
-fi
