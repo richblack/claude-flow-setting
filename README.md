@@ -52,7 +52,18 @@ cd ~/claude-flow-setting
 git pull origin main
 ```
 
-> **重要**：更新後您會獲得 `/vibe-coding` 指令和所有最新功能！
+> **重要**：更新後，**現有專案**需要重新執行 `init` 才能獲得 `/vibe-coding` 指令！
+
+**為現有專案安裝新功能：**
+```bash
+# 進入你的專案
+cd your-existing-project
+
+# 重新執行 init（會自動偵測已存在的檔案，不會覆蓋）
+~/claude-flow-setting/init
+```
+
+這會安裝 `/vibe-coding` 指令到你的專案中。
 
 ### 以後任何專案
 
