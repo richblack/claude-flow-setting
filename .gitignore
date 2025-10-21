@@ -5,12 +5,17 @@
 .swarm/
 .hive-mind/
 
-# Claude Flow 運行時文件（但保留 commands 目錄）
+# Claude Code 本地設定和自動生成的檔案
+.claude/commands/
+.claude/config.json
+.claude/settings.json
+.claude/settings.local.json
 .claude/cache/
 .claude/logs/
 .claude/temp/
 
-# RFP 目錄中的臨時文件（但保留文檔）
+# RFP 目錄中的個人檔案和臨時文件
+rfp/*_rfp.md
 rfp/*.tmp
 rfp/*.bak
 rfp/*~
