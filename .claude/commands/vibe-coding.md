@@ -12,8 +12,8 @@
 
 ## 當前階段檢查
 
-首先，檢查 `rfp/` 目錄中是否已有需求文件：
-- 如果存在 `rfp/initial-requirements.md` 或其他需求文檔，讀取並作為起點
+首先，檢查 `user-requirements/` 目錄中是否已有需求文件：
+- 如果存在 `user-requirements/initial-requirements.md`，讀取並作為起點
 - 如果不存在，詢問用戶的需求
 
 ## 階段 1: 理解需求
@@ -23,18 +23,18 @@
 2. 如果用戶提供了需求，仔細閱讀並理解
 3. 將用戶的需求總結為幾個關鍵點
 4. 詢問用戶：「我理解的需求如下：[總結]。是否正確？還有需要補充的嗎？」
-5. 等待用戶確認後，將原始需求儲存到 `rfp/initial-requirements.md`
+5. 等待用戶確認後，將原始需求儲存到 `user-requirements/initial-requirements.md`
 
 ## 階段 2: User Story Mapping
 
 **任務：**
 1. 基於理解的需求，產生 User Story Mapping
-2. 每個 User Story 使用格式：
+2. 每個 User Story 使用**一行格式**（重要！不要分成多行）：
    ```
    **使用者故事：** 作為 [角色]，我希望 [功能]，以便 [目的/價值]
    ```
 3. 按照邏輯順序組織用戶故事
-4. 以 Markdown 表格或清單形式展示給用戶
+4. 以清單形式展示給用戶（不要使用表格）
 5. 詢問用戶：「這些用戶故事是否完整反映了您的需求？需要調整或補充嗎？」
 6. 等待用戶確認
 
@@ -105,10 +105,10 @@
 當所有 5 個階段完成後：
 
 1. 總結產生的文件：
-   - `rfp/initial-requirements.md` - 原始需求
-   - `rfp/requirements.md` - User Stories + EARS 驗收標準
-   - `rfp/design.md` - 系統設計文件
-   - `rfp/tasks.md` - 任務分解清單
+   - `user-requirements/initial-requirements.md` - 原始需求（用戶編寫）
+   - `rfp/requirements.md` - User Stories + EARS 驗收標準（AI 產生）
+   - `rfp/design.md` - 系統設計文件（AI 產生）
+   - `rfp/tasks.md` - 任務分解清單（AI 產生）
 
 2. 告知用戶：「Vibe Coding 工作流程已完成！所有文件已產生在 `rfp/` 目錄中。您現在可以：
    - 查看這些文件，確保理解完整
@@ -130,4 +130,10 @@
 
 ## 開始工作流程
 
-現在，開始 **階段 1: 理解需求**。檢查 `rfp/` 目錄並開始與用戶對話。
+現在，開始 **階段 1: 理解需求**。檢查 `user-requirements/` 目錄並開始與用戶對話。
+
+## 重要提醒
+
+- **輸入目錄**: `user-requirements/` - 這裡存放用戶編寫的需求和參考資料
+- **輸出目錄**: `rfp/` - 這裡存放 AI 自動產生的規格文件
+- **不要混淆**：絕對不要將 AI 產生的內容寫入 `user-requirements/`

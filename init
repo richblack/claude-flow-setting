@@ -55,50 +55,105 @@ if [[ ! -d ".git" ]]; then
     echo "✓ 初始化 Git"
 fi
 
-# 1. 創建 rfp/ 目錄和需求範本
-echo "📁 創建 rfp/ 需求目錄..."
-mkdir -p rfp
+# 1. 創建目錄結構
+echo "📁 創建專案目錄結構..."
 
 PROJ_NAME="$CURRENT_DIR"
 
-# 只在檔案不存在時才創建
-if [[ ! -f "rfp/requirements.md" ]]; then
-    cat > rfp/requirements.md << EOF
-# $PROJ_NAME 專案需求
+# 創建用戶需求目錄
+mkdir -p user-requirements/references
+mkdir -p user-requirements/mockups
+mkdir -p user-requirements/docs
+
+# 創建 RFP 目錄（Claude 自動產生的文件）
+mkdir -p rfp
+
+# 創建用戶需求範本（只在不存在時）
+if [[ ! -f "user-requirements/initial-requirements.md" ]]; then
+    cat > user-requirements/initial-requirements.md << EOF
+# $PROJ_NAME - 需求說明
+
+> 這是您的需求文件，用自然語言描述您想要的功能。
+> Claude 會讀取這個檔案，產生正式的規格文件到 \`rfp/\` 目錄。
 
 ## 🎯 專案目標
 
 [簡要描述這個專案要解決什麼問題]
 
-## 📋 功能需求
+## 💡 功能想法
 
-### 核心功能
-- [ ] 功能 1
-- [ ] 功能 2
-- [ ] 功能 3
+### 我希望系統能夠...
 
-### 次要功能
-- [ ] 功能 4
-- [ ] 功能 5
+1. [用自然語言描述功能 1]
+2. [用自然語言描述功能 2]
+3. [用自然語言描述功能 3]
 
-## 🛠 技術需求
+### 使用情境
 
-- **語言/框架**:
-- **資料庫**:
-- **部署環境**:
+[描述用戶如何使用這個系統]
 
-## 📝 補充說明
+## 🛠 技術偏好（可選）
 
-[任何額外的技術細節或限制]
+- **語言/框架**: [如果有偏好]
+- **資料庫**: [如果有偏好]
+- **部署環境**: [如果有偏好]
+
+## 📎 參考資料
+
+- 可以將參考文件放在 \`user-requirements/references/\`
+- 可以將 UI 設計稿放在 \`user-requirements/mockups/\`
+- 可以將其他文件放在 \`user-requirements/docs/\`
 
 ---
 
-**提示**: 編輯完成後，告訴 Claude:「請閱讀 rfp/ 開始開發」
+**下一步**：
+1. 編輯完成後，告訴 Claude：「請執行 /vibe-coding」
+2. Claude 會根據這個檔案產生正式規格到 \`rfp/\` 目錄
 EOF
-    echo "✓ 已創建 rfp/requirements.md"
+    echo "✓ 已創建 user-requirements/initial-requirements.md"
 else
-    echo "⏭️  rfp/requirements.md 已存在，跳過（保留您的內容）"
+    echo "⏭️  user-requirements/initial-requirements.md 已存在，跳過（保留您的內容）"
 fi
+
+# 創建 README 說明目錄用途
+if [[ ! -f "user-requirements/README.md" ]]; then
+    cat > user-requirements/README.md << 'EOF'
+# user-requirements/ 目錄說明
+
+這個目錄存放**您的原始需求和參考資料**。
+
+## 📁 目錄結構
+
+```
+user-requirements/
+├── initial-requirements.md  # 您用自然語言寫的需求
+├── references/              # 參考文件（PDF、文章連結等）
+├── mockups/                 # UI/UX 設計稿、wireframes
+└── docs/                    # 其他相關文件
+```
+
+## 🔄 與 rfp/ 的關係
+
+- **user-requirements/** = 您寫的內容（輸入）
+- **rfp/** = Claude 產生的規格文件（輸出）
+
+## 💡 使用方式
+
+1. 在 `initial-requirements.md` 用自然語言描述需求
+2. 將參考資料放到對應的子目錄
+3. 執行 `/vibe-coding` 讓 Claude 產生正式規格
+4. Claude 會將結果寫入 `rfp/` 目錄
+
+## ⚠️ 重要
+
+- 這個目錄的內容**不會被 Claude 覆蓋**
+- 您可以隨時修改和新增內容
+- Claude 只會讀取，不會修改這裡的檔案
+EOF
+    echo "✓ 已創建 user-requirements/README.md"
+fi
+
+echo "✓ 目錄結構創建完成"
 
 # 2. 創建 .claude 目錄和 settings.json（配置通知 hooks）
 echo "⚙️  配置 Claude Code 通知..."
@@ -322,35 +377,61 @@ if [[ ! -f "README.md" ]]; then
     cat > README.md << EOF
 # $PROJ_NAME
 
-> Claude Flow 開發專案
+> Claude Flow 開發專案 - 使用 Vibe Coding 工作流程
 
 ## 🚀 快速開始
 
-1. **編輯需求**: \`rfp/requirements.md\`
-2. **開始開發**: 告訴 Claude「請閱讀 rfp/ 開始開發」
-3. **查看進度**: \`claude-flow memory recall "*"\`
+1. **編輯需求**: \`user-requirements/initial-requirements.md\`
+2. **執行 Vibe Coding**: 在 Claude Code 中執行 \`/vibe-coding\`
+3. **查看生成的規格**: 檢視 \`rfp/\` 目錄中的文件
+4. **開始開發**: 告訴 Claude「請根據 rfp/ 開始開發」
 
 ## 📁 專案結構
 
 \`\`\`
-$PROJECT_NAME/
-├── rfp/                    # 需求文件
-│   └── requirements.md
-├── CLAUDE.md              # Claude 開發指南
-├── .claude/               # Claude Code 設定
-│   └── settings.json      # 通知 hooks 配置
+$PROJ_NAME/
+├── user-requirements/         # 您的需求和參考資料（輸入）
+│   ├── initial-requirements.md
+│   ├── references/            # 參考文件
+│   ├── mockups/               # UI 設計稿
+│   └── docs/                  # 其他文件
+├── rfp/                       # AI 產生的規格文件（輸出）
+│   ├── requirements.md        # User Stories + EARS 驗收標準
+│   ├── design.md              # 系統設計文件
+│   └── tasks.md               # 任務分解清單
+├── CLAUDE.md                  # Claude 開發指南
+├── .claude/                   # Claude Code 設定
+│   ├── settings.json          # 通知 hooks 配置
+│   └── commands/
+│       └── vibe-coding.md     # Vibe Coding 工作流程
 └── README.md
 \`\`\`
+
+## 🌟 Vibe Coding 工作流程
+
+Vibe Coding 是從自然語言需求到可執行任務的完整工作流程：
+
+1. **理解需求** - 編寫 \`user-requirements/initial-requirements.md\`
+2. **User Story Mapping** - 產生使用者故事
+3. **EARS 驗收標準** - 為每個故事新增驗收標準
+4. **系統設計** - 建立架構和元件設計
+5. **任務分解** - 產生詳細的實作任務
+
+執行 \`/vibe-coding\` 開始此工作流程。
 
 ## 💡 開發流程
 
 \`\`\`bash
-# 1. 恢復記憶
+# 1. 恢復記憶（如果是舊專案）
 claude-flow memory recall "*"
 
-# 2. Claude 會自動讀取 rfp/ 並開始開發
+# 2. 執行 Vibe Coding（新功能或專案）
+# 在 Claude Code 中輸入: /vibe-coding
 
-# 3. 保存進度
+# 3. 根據生成的規格開始開發
+# 告訴 Claude: 請根據 rfp/tasks.md 開始實作
+
+# 4. 保存進度
 claude-flow memory store "progress" "完成 XXX 功能"
 \`\`\`
 
@@ -360,9 +441,15 @@ claude-flow memory store "progress" "完成 XXX 功能"
 - ✅ 不受上下文壓縮影響
 - ✅ 穩定可靠
 
+## 📚 更多資訊
+
+- 查看 \`CLAUDE.md\` 了解詳細開發流程
+- 查看 \`user-requirements/README.md\` 了解需求目錄用途
+- 查看 \`rfp/README.md\` 了解 Vibe Coding 工作流程
+
 ---
 
-使用 [Claude Flow](https://github.com/ruvnet/claude-flow) 開發
+使用 [Claude Flow Setting](https://github.com/richblack/claude-flow-setting) 開發
 EOF
     echo "✓ 已創建 README.md"
 fi
@@ -384,12 +471,12 @@ if [[ "$NOTIFIER" == "none" ]]; then
 fi
 
 echo "🎯 下一步："
-echo "1. 編輯 rfp/requirements.md 描述您的需求"
+echo "1. 編輯 user-requirements/initial-requirements.md 描述您的需求"
 echo "2. 在 Claude Code 中開啟此目錄"
-echo "3. 告訴 Claude：「請閱讀 rfp/ 開始開發」"
+echo "3. 執行 /vibe-coding 讓 Claude 產生規格文件到 rfp/"
 echo ""
 echo "📖 更多資訊："
 echo "   - 查看 CLAUDE.md 了解開發流程"
-echo "   - 查看 .claude/settings.json 了解通知配置"
+echo "   - 查看 user-requirements/README.md 了解目錄用途"
 echo ""
 

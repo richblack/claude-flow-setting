@@ -15,8 +15,12 @@
 .claude/logs/
 .claude/temp/
 
-# RFP 目錄中的個人檔案和臨時文件
-rfp/*_rfp.md
+# 用戶需求目錄（個人內容）
+user-requirements/*
+!user-requirements/README.md
+!user-requirements/.gitkeep
+
+# RFP 目錄中的臨時文件
 rfp/*.tmp
 rfp/*.bak
 rfp/*~
