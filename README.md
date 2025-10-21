@@ -1,10 +1,10 @@
 # Claude Flow 極簡設定
 
-> 本計劃 100% 由 Claude 開發，感謝它。
+> 本計劃 100% 由 Claude 開發，感謝它的辛苦。
 
 ## 💡 這是什麼
 
-ClaudeFlow 很強大，ClaudeCode 使用者推薦，但操作複雜，這個 Claude-Flow-Setting 讓專案傻瓜化快速啓動，加一些開發時發現需要的功能，就是我個人的懶人設定。
+ClaudeFlow 很強大，推薦所有 ClaudeCode 使用者使用，但它複雜，本專案讓 ClaudeFlow 專案傻瓜化快速啓動，又加上一些開發時發現需要的功能，基本是我個人的懶人設定。
 
 ### 🎯 為什麼及是什麼
 
@@ -491,9 +491,8 @@ fi
 - [cat-ccnotify-hook](https://github.com/nkygit/cat-ccnotify-hook) - 進階通知系統
 
 **但基本版本已經很好用了！**
+
 ---
-
-
 
 ## ⚡ 核心理念
 
