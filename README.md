@@ -2,6 +2,58 @@
 
 > 本計劃 100% 由 Claude 開發，感謝它。
 
+## 💡 這是什麼
+
+ClaudeFlow 很強大，ClaudeCode 使用者推薦，但操作複雜，這個 Claude-Flow-Setting 讓專案傻瓜化快速啓動，加一些開發時發現需要的功能，就是我個人的懶人設定。
+
+## 🎯 為什麼及是什麼
+
+### 為什麼做這個
+
+開發中的痛點：
+
+- **太複雜**：ClaudeFlow 功能太多，設定複雜，所以指令也非常多，實際上光要看懂它能做什麼就不容易了。
+- **不通知**：ClaudeCode 在終端機運作，要人類許可時會停工等你，卻不提醒，如果你切到別的畫面，常常很久後才發現它什麼都沒做在等你。
+- **太深奧**：Kiro 寫的需求易懂，ClaudeFlow 的文件專業難懂。
+
+### Claude-Flow-Setting 是什麼
+
+它是一個**極簡化的 Claude Flow 開發環境設定工具**，讓您一鍵完成：
+
+- ✅ **自動化通知**：使用 Claude Code 官方 hooks，需要您時自動彈出（不受上下文壓縮影響）
+- ✅ **需求驅動開發**：自動創建 `rfp/` 目錄存放需求文件
+- ✅ **開發指南**：自動生成 `CLAUDE.md` 指導 Claude 的開發流程
+- ✅ **零額外依賴**：使用系統原生通知工具
+
+### ClaudeFlow 是什麼
+
+就我粗淺的瞭解，它是「工業化 AI Agent」，這是類比於只能簡單開發的「手工業化 AI Agent」，當然功能強大且複雜。
+
+- ClaudeCode 是 AI Agent，而 ClaudeFlow 是建築在它之上的 Multi-Agents。
+- 它彌補 ClaudeCode 的不足，可以說是以開發為業者自己的「工廠」。
+- 類比現成服務如 Lovable 或 Manus 這種代理，但更強大，因它用強大的 Claude 模型，整合 74 個 MCP Server 的功能，就是擁有自己的 Lovable/ Manus。
+- 它是開源專案，你可以自行修改符合你的需求。
+
+
+### 📦 設定完成後您會得到
+
+- 簡單指令操作 ClaudeFLow，包括把記憶儲存到內建資料庫、一次叫回上次的工作記憶、啓用多 AI Agent 模式來開發（及做任何事，例如寫簡報）。
+- AI 要人類決策或同意時，會打開系統通知，就算你切到別的畫面也會看到。
+- 它會用 Kiro 方式白話文撰寫需求，讓人類輕易理解，知道它要幹什麼。
+
+```
+your-project/
+├── rfp/
+│   └── requirements.md      # 📝 需求文件（您編輯這個）
+├── CLAUDE.md                # 🤖 Claude 開發指南
+├── .claude/
+│   └── settings.json        # ⚙️  通知 hooks 配置
+├── .gitignore               # 🚫 Git 忽略規則
+└── README.md                # 📖 專案說明
+```
+
+---
+
 ## ⚡ 快速開始（兩步驟）
 
 ### 第一次使用（只需一次）
@@ -35,9 +87,35 @@ cd existing-project
 
 ---
 
-## 🌟 核心功能：Vibe Coding 工作流程
+## 💡 使用流程（3 步驟）
 
-受 Amazon Kiro IDE 啟發，本專案實現了**從自然語言需求到可執行任務**的完整工作流程。
+### 1. 編輯需求
+
+增加 rfp/requirements.md 檔案，描述您的需求，儘量用結構化方式看到層級，有助於 AI 理解。
+
+### 2. 開始開發
+
+在 Claude Code 中開啟專案目錄，然後說：
+
+```
+請閱讀 rfp/ 開始開發
+```
+
+### 3. 自動通知
+
+當 Claude 需要您的注意時，會**自動彈出桌面通知**：
+
+- 🔔 需要您確認決策時
+- ⏸️  等待超過 60 秒時
+- ✅ 任務完成時
+
+**重點**：這些通知使用 Claude Code 官方 hooks，**不會因上下文壓縮而失效**！
+
+---
+
+## Vibe Coding 的 Spec Driven 工作流程
+
+受 Amazon Kiro IDE 啟發，實現**從自然語言需求到可執行任務**的工作流程。
 
 ### 什麼是 Vibe Coding？
 
@@ -80,108 +158,7 @@ cd existing-project
 
 ---
 
-## 💡 這是什麼
-
-ClaudeFlow 很強大，ClaudeCode 使用者推薦，但操作複雜，這個 Claude-Flow-Setting 讓專案傻瓜化快速啓動，加一些開發時發現需要的功能，就是我個人的懶人設定。
-
-## 🎯 為什麼及是什麼
-
-### 為什麼做這個
-
-開發中的痛點：
-
-- **太複雜**：ClaudeFlow 功能太多，設定複雜，所以指令也非常多，實際上光要看懂它能做什麼就不容易了。
-- **不通知**：ClaudeCode 在終端機運作，要人類許可時會停工等你，卻不提醒，如果你切到別的畫面，常常很久後才發現它什麼都沒做在等你。
-- **太深奧**：Kiro 寫的需求易懂，ClaudeFlow 的文件專業難懂。
-
-### Claude-Flow-Setting 是什麼
-
-它是一個**極簡化的 Claude Flow 開發環境設定工具**，讓您一鍵完成：
-
-- ✅ **自動化通知**：使用 Claude Code 官方 hooks，需要您時自動彈出（不受上下文壓縮影響）
-- ✅ **需求驅動開發**：自動創建 `rfp/` 目錄存放需求文件
-- ✅ **開發指南**：自動生成 `CLAUDE.md` 指導 Claude 的開發流程
-- ✅ **零額外依賴**：使用系統原生通知工具
-
-### ClaudeFlow 是什麼
-
-就我粗淺的瞭解，它是「工業化 AI Agent」，這是類比於只能簡單開發的「手工業化 AI Agent」，當然功能強大且複雜。
-
-- ClaudeCode 是 AI Agent，而 ClaudeFlow 是建築在它之上的 Multi-Agents。
-- 它彌補 ClaudeCode 的不足，可以說是以開發為業者自己的「工廠」。
-- 類比現成服務如 Lovable 或 Manus 這種代理，但更強大，因它用強大的 Claude 模型，整合 74 個 MCP Server 的功能，就是擁有自己的 Lovable/ Manus。
-- 它是開源專案，你可以自行修改符合你的需求。
-
-
-## 📦 設定完成後您會得到
-
-- 簡單指令操作 ClaudeFLow，包括把記憶儲存到內建資料庫、一次叫回上次的工作記憶、啓用多 AI Agent 模式來開發（及做任何事，例如寫簡報）。
-- AI 要人類決策或同意時，會打開系統通知，就算你切到別的畫面也會看到。
-- 它會用 Kiro 方式白話文撰寫需求，讓人類輕易理解，知道它要幹什麼。
-
-```
-your-project/
-├── rfp/
-│   └── requirements.md      # 📝 需求文件（您編輯這個）
-├── CLAUDE.md                # 🤖 Claude 開發指南
-├── .claude/
-│   └── settings.json        # ⚙️  通知 hooks 配置
-├── .gitignore               # 🚫 Git 忽略規則
-└── README.md                # 📖 專案說明
-```
-
----
-
-## 💡 使用流程
-
-### 1. 編輯需求
-
-增加 rfp/requirements.md 檔案，描述您的需求，儘量用結構化方式看到層級，有助於 AI 理解。
-
-### 2. 開始開發
-
-在 Claude Code 中開啟專案目錄，然後說：
-
-```
-請閱讀 rfp/ 開始開發
-```
-
-### 3. 自動通知
-
-當 Claude 需要您的注意時，會**自動彈出桌面通知**：
-
-- 🔔 需要您確認決策時
-- ⏸️  等待超過 60 秒時
-- ✅ 任務完成時
-
-**重點**：這些通知使用 Claude Code 官方 hooks，**不會因上下文壓縮而失效**！
-
----
-
-## 🔧 前置需求
-
-### 必需
-
-- Claude Code CLI 已安裝
-- Git
-
-### 可選（通知功能）
-
-安裝系統通知工具以獲得最佳體驗：
-
-```bash
-# macOS
-brew install terminal-notifier
-
-# Linux (Ubuntu/Debian)
-sudo apt-get install libnotify-bin
-```
-
-如果不安裝，通知會退化到終端訊息，功能仍可正常運作。
-
----
-
-## 📋 開發最佳實踐
+## 📋 ClaudeFlow 開發簡單指令
 
 ### 記憶系統
 
@@ -260,7 +237,47 @@ claude-flow sparc run security-review "檢查安全漏洞"
 - ✅ 不依賴 Claude 記得要發通知
 
 ---
+## 🔧 安裝前置需求
 
+### 必需
+
+- Claude Code CLI 已安裝
+- Git
+
+### 安裝 Claude Flow
+
+確認 Claude Flow 已正確安裝：
+
+```bash
+which claude-flow
+
+# 如果沒有，請安裝
+# 參考: https://github.com/ruvnet/claude-flow
+```
+
+### 通知功能
+
+安裝系統通知工具以獲得最佳體驗：
+
+```bash
+# macOS
+brew install terminal-notifier
+
+# Linux (Ubuntu/Debian)
+sudo apt-get install libnotify-bin
+```
+
+如果不安裝，通知會退化到終端訊息，功能仍可正常運作。
+
+### 想要更豐富的通知？
+
+如果您想要智能音效選擇、自動 emoji 等進階功能，可以考慮安裝：
+
+- [cat-ccnotify-hook](https://github.com/nkygit/cat-ccnotify-hook) - 進階通知系統
+
+但基本版本已經足夠穩定可靠！
+
+---
 ## 🛠 故障排除
 
 ### 通知不出現？
@@ -286,26 +303,6 @@ claude-flow sparc run security-review "檢查安全漏洞"
    # Linux
    notify-send "Claude Code" "測試"
    ```
-
-### Claude Flow 指令找不到？
-
-確認 Claude Flow 已正確安裝：
-
-```bash
-which claude-flow
-
-# 如果沒有，請安裝
-# 參考: https://github.com/ruvnet/claude-flow
-```
-
-### 想要更豐富的通知？
-
-如果您想要智能音效選擇、自動 emoji 等進階功能，可以考慮安裝：
-
-- [cat-ccnotify-hook](https://github.com/nkygit/cat-ccnotify-hook) - 進階通知系統
-
-但基本版本已經足夠穩定可靠！
-
 ---
 
 ## 🔗 相關資源
