@@ -359,70 +359,138 @@ claude-flow swarm status
 
 ## 🔧 安裝前置需求
 
-### 必需
+> **重要說明**：Claude Flow Setting 本身不需要安裝，只是一個設定腳本。
+> 但它需要依賴以下系統來運作，請確保這些系統已正確安裝。
 
-- Claude Code CLI 已安裝
-- Git
+### ✅ 必需安裝（沒有就無法使用）
 
-### 安裝 Claude Flow
+#### 1. Claude Code
 
-確認 Claude Flow 已正確安裝：
-
+**檢查是否已安裝：**
 ```bash
+claude --version
+```
+
+**如果沒有安裝：**
+- 官方網站：https://claude.ai/download
+- 說明文件：https://docs.claude.com/en/docs/claude-code
+
+---
+
+#### 2. Git
+
+**檢查是否已安裝：**
+```bash
+git --version
+```
+
+**如果沒有安裝：**
+- macOS: `brew install git` 或從 https://git-scm.com/download/mac 下載
+- Linux: `sudo apt-get install git` (Ubuntu/Debian) 或 `sudo yum install git` (CentOS/RHEL)
+- Windows: https://git-scm.com/download/win
+
+---
+
+#### 3. Claude Flow
+
+**檢查是否已安裝：**
+```bash
+claude-flow --version
+# 或
 which claude-flow
-
-# 如果沒有，請安裝
-# 參考: https://github.com/ruvnet/claude-flow
 ```
 
-### 通知功能
+**如果沒有安裝：**
+- GitHub：https://github.com/ruvnet/claude-flow
+- 安裝說明：https://github.com/ruvnet/claude-flow#installation
 
-安裝系統通知工具以獲得最佳體驗：
+---
+
+### 🔔 建議安裝（通知功能）
+
+通知工具**不是必需的**，但強烈建議安裝以獲得最佳體驗。
+
+#### macOS - terminal-notifier
+
+**檢查是否已安裝：**
+```bash
+which terminal-notifier
+```
+
+**安裝方式：**
+```bash
+brew install terminal-notifier
+```
+
+**測試通知：**
+```bash
+terminal-notifier -message "測試通知" -title "Claude Code"
+```
+
+---
+
+#### Linux - libnotify
+
+**檢查是否已安裝：**
+```bash
+which notify-send
+```
+
+**安裝方式：**
+```bash
+# Ubuntu/Debian
+sudo apt-get install libnotify-bin
+
+# CentOS/RHEL
+sudo yum install libnotify
+```
+
+**測試通知：**
+```bash
+notify-send "Claude Code" "測試通知"
+```
+
+---
+
+### 📋 快速檢查清單
+
+執行以下指令檢查所有必需元件：
 
 ```bash
-# macOS
-brew install terminal-notifier
+echo "=== 檢查必需元件 ==="
+echo -n "Claude Code: " && claude --version 2>/dev/null || echo "❌ 未安裝"
+echo -n "Git: " && git --version 2>/dev/null || echo "❌ 未安裝"
+echo -n "Claude Flow: " && claude-flow --version 2>/dev/null || echo "❌ 未安裝"
 
-# Linux (Ubuntu/Debian)
-sudo apt-get install libnotify-bin
+echo ""
+echo "=== 檢查通知工具（可選）==="
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    echo -n "terminal-notifier: " && which terminal-notifier 2>/dev/null || echo "⚠️  未安裝（建議安裝）"
+else
+    echo -n "notify-send: " && which notify-send 2>/dev/null || echo "⚠️  未安裝（建議安裝）"
+fi
 ```
 
-如果不安裝，通知會退化到終端訊息，功能仍可正常運作。
+---
 
-### 想要更豐富的通知？
+### 💡 沒有通知工具會怎樣？
 
-如果您想要智能音效選擇、自動 emoji 等進階功能，可以考慮安裝：
+如果不安裝通知工具：
+- ✅ 所有功能仍可正常運作
+- ⚠️  通知會退化為終端文字訊息
+- ⚠️  切換到其他視窗時不會收到提醒
+
+**建議**：花 1 分鐘安裝通知工具，體驗會好很多！
+
+---
+
+### 🎨 進階選項
+
+如果你想要更豐富的通知體驗（智能音效、自動 emoji 等）：
 
 - [cat-ccnotify-hook](https://github.com/nkygit/cat-ccnotify-hook) - 進階通知系統
 
-但基本版本已經足夠穩定可靠！
-
----
-## 🛠 故障排除
-
-### 通知不出現？
-
-1. **檢查通知工具是否安裝**
-   ```bash
-   # macOS
-   which terminal-notifier
-
-   # Linux
-   which notify-send
-   ```
-
-2. **檢查系統通知權限**
-   - macOS: 系統偏好設定 → 通知
-   - Linux: 確認通知守護程式運行中
-
-3. **測試通知**
-   ```bash
-   # macOS
-   terminal-notifier -message "測試" -title "Claude Code"
-
-   # Linux
-   notify-send "Claude Code" "測試"
-   ```
+**但基本版本已經很好用了！**
 ---
 
 
