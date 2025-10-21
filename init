@@ -61,7 +61,9 @@ mkdir -p rfp
 
 PROJ_NAME="$CURRENT_DIR"
 
-cat > rfp/requirements.md << EOF
+# 只在檔案不存在時才創建
+if [[ ! -f "rfp/requirements.md" ]]; then
+    cat > rfp/requirements.md << EOF
 # $PROJ_NAME 專案需求
 
 ## 🎯 專案目標
@@ -93,8 +95,10 @@ cat > rfp/requirements.md << EOF
 
 **提示**: 編輯完成後，告訴 Claude:「請閱讀 rfp/ 開始開發」
 EOF
-
-echo "✓ 已創建 rfp/requirements.md"
+    echo "✓ 已創建 rfp/requirements.md"
+else
+    echo "⏭️  rfp/requirements.md 已存在，跳過（保留您的內容）"
+fi
 
 # 2. 創建 .claude 目錄和 settings.json（配置通知 hooks）
 echo "⚙️  配置 Claude Code 通知..."
@@ -165,7 +169,9 @@ fi
 # 3. 創建 CLAUDE.md（專案級別的 Claude 指令）
 echo "📝 創建 CLAUDE.md..."
 
-cat > CLAUDE.md << 'EOF'
+# 只在檔案不存在時才創建
+if [[ ! -f "CLAUDE.md" ]]; then
+    cat > CLAUDE.md << 'EOF'
 # Claude Flow 開發指南
 
 ## 🎯 開發流程
@@ -277,8 +283,10 @@ claude-flow memory recall "*"
 **記住**：通知功能已透過 `.claude/settings.json` 的 hooks 配置，
 不受上下文壓縮影響，會穩定運作！
 EOF
-
-echo "✓ 已創建 CLAUDE.md"
+    echo "✓ 已創建 CLAUDE.md"
+else
+    echo "⏭️  CLAUDE.md 已存在，跳過（保留您的內容）"
+fi
 
 # 4. 創建 .gitignore（如果不存在）
 if [[ ! -f ".gitignore" ]]; then
