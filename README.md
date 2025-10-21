@@ -1,259 +1,292 @@
-# Claude Flow 的極簡設定
+# Claude Flow 極簡設定
 
 ## 🎯 這是什麼
 
-Claude Flow 設置複雜，我做了一個超簡化 Claude Flow 設定，讓你：
+一個**極簡化的 Claude Flow 開發環境設定工具**，讓您一鍵完成：
 
-- **記憶**：斷點續傳，不會忘記工作進度
-- **研究**：先讀懂需求再開發
-- **通知**：需要你時會發聲
-- **一鍵設定**：新專案和現有專案都只需一個指令
+- ✅ **自動化通知**：使用 Claude Code 官方 hooks，需要您時自動彈出（不受上下文壓縮影響）
+- ✅ **需求驅動開發**：自動創建 `rfp/` 目錄存放需求文件
+- ✅ **開發指南**：自動生成 `CLAUDE.md` 指導 Claude 的開發流程
+- ✅ **零額外依賴**：使用系統原生通知工具
 
 ---
 
 ## 🚀 立即開始
 
-### 方法一：從 GitHub 安裝（需要公開儲存庫）
-
-> ⚠️ **注意**：如果儲存庫是私有的，請使用方法二
-
-#### 新專案 - 一個指令搞定
+### 新專案
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/richblack/claude-flow-setting/main/install.sh | bash -s my_awesome_project
+git clone https://github.com/richblack/claude-flow-setting.git
+cd claude-flow-setting
+./quick-setup.sh my_awesome_project
+cd my_awesome_project
 ```
 
-#### 現有專案 - 在專案目錄內執行
+### 現有專案
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/richblack/claude-flow-setting/main/install.sh | bash
-```
-
-### 方法二：克隆後本地安裝（適用於私有儲存庫）
-
-#### 新專案
-
-```bash
-git clone https://github.com/richblack/claude-flow-setting.git temp-setup
-cd temp-setup
-./install.sh my_awesome_project
-cd ../my_awesome_project
-rm -rf ../temp-setup
-```
-
-#### 現有專案
-
-```bash
-git clone https://github.com/richblack/claude-flow-setting.git temp-setup
-temp-setup/install.sh
-rm -rf temp-setup
+git clone https://github.com/richblack/claude-flow-setting.git
+cd your-existing-project
+/path/to/claude-flow-setting/quick-setup.sh
 ```
 
 ---
 
-## ⚡ 只需記住 3 個核心指令
+## 📦 設定完成後您會得到
 
-### 1️⃣ 開始工作 = 讀取記憶
-
-```bash
-claude-flow memory recall "*"  # Claude 會記起所有工作
 ```
-
-### 2️⃣ 結束工作 = 保存記憶  
-
-```bash
-claude-flow memory store "progress" "今天完成了XXX功能"
-```
-
-### 3️⃣ 語音通知
-
-```bash
-python3 claude_notify.py "開始工作" "gentle"  # 語音通知
+your-project/
+├── rfp/
+│   └── requirements.md      # 📝 需求文件（您編輯這個）
+├── CLAUDE.md                # 🤖 Claude 開發指南
+├── .claude/
+│   └── settings.json        # ⚙️  通知 hooks 配置
+├── .gitignore               # 🚫 Git 忽略規則
+└── README.md                # 📖 專案說明
 ```
 
 ---
 
-## 💡 實際工作流程
+## 💡 使用流程
 
-### 早上開始工作
-
-```bash
-cd my_project
-claude-flow memory recall "*"           # 叫醒記憶
-python3 claude_notify.py "開始工作" "gentle"  # 語音通知
-```
-
-### 開發中 (讓 Claude 主導)
+### 1. 編輯需求
 
 ```bash
-# 研究需求 (Claude 會自己讀 rfp/)
-claude-flow sparc run research "請仔細閱讀 rfp/ 需求"
-
-# 開發 (Claude 會根據需求自動規劃)
-claude-flow sparc run architect "根據需求設計架構"
-claude-flow sparc run coder "開始實作"
+# 在 rfp/requirements.md 中描述您的需求
+vim rfp/requirements.md
 ```
 
-### 晚上結束
+### 2. 開始開發
 
-```bash
-claude-flow memory store "daily" "今日進度：完成登入功能"
-python3 claude_notify.py "明天見" "excited"
+在 Claude Code 中開啟專案目錄，然後說：
+
 ```
+請閱讀 rfp/ 開始開發
+```
+
+### 3. 自動通知
+
+當 Claude 需要您的注意時，會**自動彈出桌面通知**：
+
+- 🔔 需要您確認決策時
+- ⏸️  等待超過 60 秒時
+- ✅ 任務完成時
+
+**重點**：這些通知使用 Claude Code 官方 hooks，**不會因上下文壓縮而失效**！
 
 ---
 
-## 🔄 當機或重啟後
+## 🔧 前置需求
+
+### 必需
+
+- Claude Code CLI 已安裝
+- Git
+
+### 可選（通知功能）
+
+安裝系統通知工具以獲得最佳體驗：
 
 ```bash
-# 就這一個指令
+# macOS
+brew install terminal-notifier
+
+# Linux (Ubuntu/Debian)
+sudo apt-get install libnotify-bin
+```
+
+如果不安裝，通知會退化到終端訊息，功能仍可正常運作。
+
+---
+
+## 📋 開發最佳實踐
+
+### 記憶系統
+
+Claude Flow 支援記憶功能，善用它來保存進度：
+
+```bash
+# 開始工作時 - 恢復記憶
 claude-flow memory recall "*"
-# Claude 會自己恢復狀態繼續工作
+
+# 重要決策記錄
+claude-flow memory store "architecture" "使用微服務架構"
+
+# 保存進度
+claude-flow memory store "progress" "完成用戶認證模組"
+
+# 結束工作時 - 查看所有記憶
+claude-flow memory query "*"
 ```
 
----
+### SPARC 開發模式
 
-## 🗂 極簡專案結構
-
-設定完成後，每個專案會有：
-
-```txt
-my_project/
-├── rfp/requirements.md      # 你編輯需求（唯一需要編輯的）
-├── claude-code-voice/       # 完整語音通知系統
-│   ├── claude_notify.py     # 主要腳本
-│   └── ...                  # 其他功能文件
-├── claude_notify.py         # 便捷腳本
-└── (Claude 建立的其他檔案)
-```
-
----
-
-## 🆘 遇到問題？
-
-### Claude 忘記了？
+使用專業化的開發代理：
 
 ```bash
-claude-flow memory recall "*"
-```
+# 架構設計
+claude-flow sparc run architect "根據 rfp/ 設計系統架構"
 
-### 需要 Claude 注意你？
+# 開發實作
+claude-flow sparc run coder "實作用戶認證功能"
 
-```bash
-python3 claude_notify.py "需要幫助" "urgent"
-```
+# 測試驅動開發
+claude-flow sparc run tdd "建立測試套件"
 
-### 想知道 Claude 在做什麼？
-
-```bash
-claude-flow status
-```
-
----
-
-## 📌 核心概念：讓 Claude 主導
-
-你只需要：
-
-1. 寫好需求在 `rfp/`
-2. 告訴 Claude：「請閱讀 rfp/ 開始開發」
-3. Claude 會自己規劃、研究、開發、測試
-4. 需要你時會發聲通知
-
-## 重點記住
-
-不用管細節，Claude Flow 會處理一切
-
----
-
-## 🔊 語音通知系統
-
-使用完整的 [Claude Code Voice](https://github.com/richblack/Claude-Code-Voice) 系統，包含：
-
-### 🎯 核心功能
-
-- **Mac 通知中心顯示** - 視覺 + 語音雙重通知
-- **靜音模式** - 只有通知沒有語音
-- **藍牙耳機偵測** - 自動切換語音模式
-- **AI 自由發言** - Claude 可以說任何想說的話
-
-### 📱 通知模式
-
-- `urgent` - 緊急事件 (快來看看！)
-- `gentle` - 一般通知 (嗨，打擾一下，)
-- `excited` - 正面消息 (太棒了！)
-- `worried` - 問題警告 (糟糕，)
-- `thinking` - 需要思考 (嗯...讓我想想，)
-
-```bash
-python3 claude_notify.py "訊息內容" "情緒類型"
-```
-
-### 🎧 智慧偵測
-
-- 自動偵測藍牙或有線耳機
-- 連上耳機時自動啟用語音
-- 拔掉耳機時切換到靜音 + 通知模式
-
----
-
-## 🤖 SPARC 開發模式
-
-Claude Flow 使用 SPARC (Systematic Programming, Architecture, Research, and Coordination) 開發系統：
-
-### 架構與設計
-
-- `claude-flow sparc run architect "設計系統架構"`
-- `claude-flow sparc run ui-ux "設計用戶介面"`
-- `claude-flow sparc run database "設計資料庫結構"`
-
-### 開發實作
-
-- `claude-flow sparc run coder "實作用戶認證"`
-- `claude-flow sparc run api "建立 REST API"`
-- `claude-flow sparc run mobile "開發行動應用"`
-
-### 測試與品質
-
-- `claude-flow sparc run tdd "建立測試套件"`
-- `claude-flow sparc run qa "品質保證測試"`
-
----
-
-## 🧠 記憶系統
-
-Claude Flow 具備持久記憶系統：
-
-```bash
-# 儲存專案資訊
-claude-flow memory store "requirements" "用戶認證使用 JWT"
-claude-flow memory store "architecture" "微服務設計模式"
-
-# 查詢記憶
-claude-flow memory query "auth"
-claude-flow memory recall "architecture/*"
+# 安全稽核
+claude-flow sparc run security-review "檢查安全漏洞"
 ```
 
 ---
 
-## 📈 監控與分析
+## 🔔 通知系統運作原理
+
+### Claude Code 官方 Hooks
+
+此專案使用 Claude Code 的官方 hooks 機制：
+
+**配置檔案**: `.claude/settings.json`
+
+```json
+{
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "terminal-notifier -message \"Claude Code 需要您的注意\" ..."
+          }
+        ]
+      }
+    ],
+    "Stop": [...]
+  }
+}
+```
+
+### 觸發時機
+
+- **Notification Hook**: Claude 需要許可時，或閒置 60 秒時
+- **Stop Hook**: 任務完成時
+
+### 為什麼穩定可靠？
+
+- ✅ 系統級別的 hook，不在 Claude 的上下文中
+- ✅ 即使上下文窗口被壓縮，hooks 仍會觸發
+- ✅ 不依賴 Claude 記得要發通知
+
+---
+
+## 🛠 故障排除
+
+### 通知不出現？
+
+1. **檢查通知工具是否安裝**
+   ```bash
+   # macOS
+   which terminal-notifier
+
+   # Linux
+   which notify-send
+   ```
+
+2. **檢查系統通知權限**
+   - macOS: 系統偏好設定 → 通知
+   - Linux: 確認通知守護程式運行中
+
+3. **測試通知**
+   ```bash
+   # macOS
+   terminal-notifier -message "測試" -title "Claude Code"
+
+   # Linux
+   notify-send "Claude Code" "測試"
+   ```
+
+### Claude Flow 指令找不到？
+
+確認 Claude Flow 已正確安裝：
 
 ```bash
-# 系統狀態監控
-claude-flow status
+which claude-flow
 
-# 啟動 Web UI 監控面板
-claude-flow start --ui --port 3000
+# 如果沒有，請安裝
+# 參考: https://github.com/ruvnet/claude-flow
 ```
+
+### 想要更豐富的通知？
+
+如果您想要智能音效選擇、自動 emoji 等進階功能，可以考慮安裝：
+
+- [cat-ccnotify-hook](https://github.com/nkygit/cat-ccnotify-hook) - 進階通知系統
+
+但基本版本已經足夠穩定可靠！
 
 ---
 
 ## 🔗 相關資源
 
-- **Claude Flow**: <https://github.com/ruvnet/claude-flow>
-- **語音通知**: <https://github.com/richblack/Claude-Code-Voice>
-- **此專案**: <https://github.com/richblack/claude-flow-setting>
+- **Claude Flow**: https://github.com/ruvnet/claude-flow
+- **Claude Code 文檔**: https://docs.claude.com/en/docs/claude-code
+- **此專案**: https://github.com/richblack/claude-flow-setting
 
 ---
 
-**就這麼簡單！不用記複雜指令，Claude Flow 會處理一切** 🎉
+## 📝 範例工作流程
+
+### 早上開始工作
+
+```bash
+cd my_project
+
+# 1. 恢復記憶
+claude-flow memory recall "*"
+
+# 2. 在 Claude Code 中開啟專案
+# 3. 告訴 Claude: "請閱讀 rfp/ 繼續昨天的工作"
+```
+
+### 開發過程
+
+Claude 會自動：
+- 📖 閱讀 `rfp/requirements.md` 理解需求
+- 🏗️ 規劃架構
+- 💻 編寫程式碼
+- 🧪 建立測試
+- 🔔 需要您時自動通知
+
+您只需要：
+- ✅ 回應 Claude 的問題
+- ✅ 檢視和確認變更
+- ✅ 提供反饋
+
+### 晚上結束
+
+```bash
+# 保存今日進度
+claude-flow memory store "daily" "$(date): 完成用戶認證和資料庫設計"
+
+# 提交變更
+git add .
+git commit -m "完成用戶認證功能"
+git push
+```
+
+---
+
+## ⚡ 核心理念
+
+**讓 Claude 主導開發，您專注於決策**
+
+1. 📝 您寫需求 (`rfp/requirements.md`)
+2. 🤖 Claude 讀需求並開發
+3. 🔔 需要您時自動通知
+4. ✅ 您做決策和確認
+5. 💾 自動保存記憶
+6. 🔄 明天無縫繼續
+
+---
+
+**就這麼簡單！一個指令，開始開發** 🎉

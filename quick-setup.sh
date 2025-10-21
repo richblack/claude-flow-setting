@@ -1,0 +1,385 @@
+#!/bin/bash
+
+# Claude Flow 極簡一鍵設定
+# 使用方式：./quick-setup.sh [project_name]
+# 新專案：./quick-setup.sh my_project
+# 現有專案：在專案目錄內執行 ./quick-setup.sh
+
+set -e
+
+PROJECT_NAME=${1:-""}
+CURRENT_DIR=$(basename "$(pwd)")
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+echo "🌊 Claude Flow 極簡設定"
+echo ""
+
+# 檢測通知工具
+detect_notifier() {
+    if command -v terminal-notifier >/dev/null 2>&1; then
+        echo "terminal-notifier"
+    elif command -v notify-send >/dev/null 2>&1; then
+        echo "notify-send"
+    else
+        echo "none"
+    fi
+}
+
+NOTIFIER=$(detect_notifier)
+
+# 提示安裝通知工具
+if [[ "$NOTIFIER" == "none" ]]; then
+    echo "⚠️  建議安裝通知工具以獲得最佳體驗："
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "   macOS: brew install terminal-notifier"
+    else
+        echo "   Linux: sudo apt-get install libnotify-bin"
+    fi
+    echo ""
+fi
+
+# 如果有專案名稱，創建新專案
+if [[ -n "$PROJECT_NAME" ]]; then
+    echo "🚀 創建新專案: $PROJECT_NAME"
+
+    mkdir -p "$PROJECT_NAME"
+    cd "$PROJECT_NAME"
+
+    # 初始化 git（如果需要）
+    if [[ ! -d ".git" ]]; then
+        git init -q
+        echo "✓ 初始化 Git"
+    fi
+
+else
+    echo "🔧 在現有專案 '$CURRENT_DIR' 中設定..."
+fi
+
+# 1. 創建 rfp/ 目錄和需求範本
+echo "📁 創建 rfp/ 需求目錄..."
+mkdir -p rfp
+
+if [[ -n "$PROJECT_NAME" ]]; then
+    PROJ_NAME="$PROJECT_NAME"
+else
+    PROJ_NAME="$CURRENT_DIR"
+fi
+
+cat > rfp/requirements.md << EOF
+# $PROJ_NAME 專案需求
+
+## 🎯 專案目標
+
+[簡要描述這個專案要解決什麼問題]
+
+## 📋 功能需求
+
+### 核心功能
+- [ ] 功能 1
+- [ ] 功能 2
+- [ ] 功能 3
+
+### 次要功能
+- [ ] 功能 4
+- [ ] 功能 5
+
+## 🛠 技術需求
+
+- **語言/框架**:
+- **資料庫**:
+- **部署環境**:
+
+## 📝 補充說明
+
+[任何額外的技術細節或限制]
+
+---
+
+**提示**: 編輯完成後，告訴 Claude:「請閱讀 rfp/ 開始開發」
+EOF
+
+echo "✓ 已創建 rfp/requirements.md"
+
+# 2. 創建 .claude 目錄和 settings.json（配置通知 hooks）
+echo "⚙️  配置 Claude Code 通知..."
+mkdir -p .claude
+
+# 根據偵測到的通知工具創建配置
+if [[ "$NOTIFIER" == "terminal-notifier" ]]; then
+    NOTIFY_CMD='terminal-notifier -message \"Claude Code 需要您的注意\" -title \"Claude Code\" -sound default'
+    STOP_CMD='terminal-notifier -message \"任務已完成\" -title \"Claude Code\" -sound default'
+elif [[ "$NOTIFIER" == "notify-send" ]]; then
+    NOTIFY_CMD='notify-send "Claude Code" "需要您的注意"'
+    STOP_CMD='notify-send "Claude Code" "任務已完成"'
+else
+    # 回退到簡單的 echo
+    NOTIFY_CMD='echo "🔔 Claude Code 需要您的注意"'
+    STOP_CMD='echo "✅ 任務已完成"'
+fi
+
+cat > .claude/settings.json << EOF
+{
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$NOTIFY_CMD"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$STOP_CMD"
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(terminal-notifier:*)",
+      "Bash(notify-send:*)"
+    ]
+  }
+}
+EOF
+
+echo "✓ 已配置通知 hooks"
+
+# 3. 創建 CLAUDE.md（專案級別的 Claude 指令）
+echo "📝 創建 CLAUDE.md..."
+
+cat > CLAUDE.md << 'EOF'
+# Claude Flow 開發指南
+
+## 🎯 開發流程
+
+### 1. 開始前必讀
+- **永遠先閱讀 `rfp/` 目錄**：理解需求後再開始開發
+- **使用記憶系統**：重要決策和進度都要記錄
+
+### 2. 標準開發流程
+
+```bash
+# 啟動時 - 恢復記憶
+claude-flow memory recall "*"
+
+# 閱讀需求
+# 請仔細閱讀 rfp/ 目錄中的所有需求文件
+
+# 規劃架構
+claude-flow sparc run architect "根據 rfp/ 需求設計架構"
+
+# 開始開發
+claude-flow sparc run coder "實作功能"
+
+# 測試
+claude-flow sparc run tdd "建立測試"
+
+# 結束時 - 保存記憶
+claude-flow memory store "progress" "今日完成：XXX"
+```
+
+## 🔔 通知規則
+
+### 何時必須主動詢問用戶
+
+1. **需要決策時**
+   - 多種實作方案可選擇
+   - 架構設計的重要決定
+   - 技術棧選擇
+
+2. **遇到阻礙時**
+   - 錯誤無法自行解決
+   - 需求不清楚
+   - 測試失敗且原因不明
+
+3. **完成階段性任務時**
+   - 完成一個主要功能
+   - 完成測試
+   - 準備部署
+
+### 通知方式
+
+當需要用戶注意時：
+- 系統會自動彈出通知（透過 hooks）
+- 在訊息中明確說明需要什麼
+- 等待用戶回應後再繼續
+
+## 📋 最佳實踐
+
+### Do ✅
+- 先讀 rfp/ 再動手
+- 重要決策記錄到 memory
+- 需要確認時主動詢問
+- 階段完成後通知用戶
+
+### Don't ❌
+- 不要假設需求，有疑問就問
+- 不要跳過測試
+- 不要在不確定時繼續開發
+- 不要忘記保存記憶
+
+## 💾 記憶系統使用
+
+```bash
+# 保存架構決策
+claude-flow memory store "architecture" "使用 微服務架構，API Gateway + 3個服務"
+
+# 保存技術棧
+claude-flow memory store "tech-stack" "Node.js + PostgreSQL + Redis"
+
+# 保存進度
+claude-flow memory store "progress" "完成用戶認證模組"
+
+# 保存問題
+claude-flow memory store "issues" "資料庫連線池需要優化"
+
+# 查詢特定記憶
+claude-flow memory query "architecture"
+
+# 恢復所有記憶
+claude-flow memory recall "*"
+```
+
+## 🚨 特別注意
+
+1. **上下文壓縮後的恢復**
+   - 如果忘記之前的工作，立即執行：`claude-flow memory recall "*"`
+   - 重新閱讀 `rfp/requirements.md`
+
+2. **長時間執行的任務**
+   - 定期報告進度
+   - 階段完成時通知用戶
+
+3. **需要用戶介入**
+   - 系統會自動觸發通知
+   - 明確說明需要什麼決策或行動
+
+---
+
+**記住**：通知功能已透過 `.claude/settings.json` 的 hooks 配置，
+不受上下文壓縮影響，會穩定運作！
+EOF
+
+echo "✓ 已創建 CLAUDE.md"
+
+# 4. 創建 .gitignore（如果不存在）
+if [[ ! -f ".gitignore" ]]; then
+    cat > .gitignore << EOF
+# Claude Flow
+.roomodes
+.claude/settings.local.json
+
+# 環境變數
+.env
+.env.local
+
+# 依賴
+node_modules/
+venv/
+__pycache__/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+EOF
+    echo "✓ 已創建 .gitignore"
+fi
+
+# 5. 創建簡單的 README（如果是新專案且不存在）
+if [[ -n "$PROJECT_NAME" ]] && [[ ! -f "README.md" ]]; then
+    cat > README.md << EOF
+# $PROJECT_NAME
+
+> Claude Flow 開發專案
+
+## 🚀 快速開始
+
+1. **編輯需求**: \`rfp/requirements.md\`
+2. **開始開發**: 告訴 Claude「請閱讀 rfp/ 開始開發」
+3. **查看進度**: \`claude-flow memory recall "*"\`
+
+## 📁 專案結構
+
+\`\`\`
+$PROJECT_NAME/
+├── rfp/                    # 需求文件
+│   └── requirements.md
+├── CLAUDE.md              # Claude 開發指南
+├── .claude/               # Claude Code 設定
+│   └── settings.json      # 通知 hooks 配置
+└── README.md
+\`\`\`
+
+## 💡 開發流程
+
+\`\`\`bash
+# 1. 恢復記憶
+claude-flow memory recall "*"
+
+# 2. Claude 會自動讀取 rfp/ 並開始開發
+
+# 3. 保存進度
+claude-flow memory store "progress" "完成 XXX 功能"
+\`\`\`
+
+## 🔔 通知系統
+
+- ✅ 系統會在需要您注意時自動彈出通知
+- ✅ 不受上下文壓縮影響
+- ✅ 穩定可靠
+
+---
+
+使用 [Claude Flow](https://github.com/ruvnet/claude-flow) 開發
+EOF
+    echo "✓ 已創建 README.md"
+fi
+
+echo ""
+echo "✅ 設定完成！"
+echo ""
+echo "📁 專案位置: $(pwd)"
+echo ""
+
+if [[ "$NOTIFIER" == "none" ]]; then
+    echo "💡 提示：通知功能已配置但需要安裝通知工具："
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        echo "   執行: brew install terminal-notifier"
+    else
+        echo "   執行: sudo apt-get install libnotify-bin"
+    fi
+    echo ""
+fi
+
+echo "🎯 下一步："
+echo "1. 編輯 rfp/requirements.md 描述您的需求"
+echo "2. 在 Claude Code 中開啟此目錄"
+echo "3. 告訴 Claude：「請閱讀 rfp/ 開始開發」"
+echo ""
+echo "📖 更多資訊："
+echo "   - 查看 CLAUDE.md 了解開發流程"
+echo "   - 查看 .claude/settings.json 了解通知配置"
+echo ""
+
+# 如果是新專案，顯示 cd 指令
+if [[ -n "$PROJECT_NAME" ]]; then
+    echo "開始工作："
+    echo "   cd $PROJECT_NAME"
+    echo "   # 用 Claude Code 開啟此目錄"
+fi

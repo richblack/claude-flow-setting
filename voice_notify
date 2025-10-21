@@ -1,4 +1,0 @@
-#!/bin/bash
-# 專案語音通知快捷指令 - 指向全域語音系統
-
-python3 ~/Documents/claude-code-voice/claude_notify.py "$@"
