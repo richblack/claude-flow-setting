@@ -1,92 +1,240 @@
-# Claude Flow 極簡設定
+# 🌊 Claude Flow 開發環境設定
 
-## 🎯 這是什麼
+> **從需求到實現的完整智能工作流** - 結合 Amazon Kiro IDE 的 Vibe Coding 理念與 Claude Code 的強大功能
 
-一個**極簡化的 Claude Flow 開發環境設定工具**，讓您一鍵完成：
-
-- ✅ **自動化通知**：使用 Claude Code 官方 hooks，需要您時自動彈出（不受上下文壓縮影響）
-- ✅ **需求驅動開發**：自動創建 `rfp/` 目錄存放需求文件
-- ✅ **開發指南**：自動生成 `CLAUDE.md` 指導 Claude 的開發流程
-- ✅ **零額外依賴**：使用系統原生通知工具
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/version-2.0-green.svg)](CHANGELOG.md)
 
 ---
 
-## 🚀 立即開始
+## ✨ 三大核心特色
 
-### 新專案
+### 🎨 1. Vibe Coding 工作流
+**受 Amazon Kiro IDE 啟發，但更快更好！**
+
+從自然語言需求到可執行任務的完整流程：
+```
+💬 自然語言描述 → 📋 User Story → ✅ EARS 驗收標準 → 🏗️ 系統設計 → 📝 任務分解 → 🚀 開始實現
+```
+
+**一個指令開始：**
+```
+/vibe-coding
+```
+
+**優勢**：
+- ✅ 清晰溝通 - 非技術人員也能理解
+- ✅ 完整追蹤 - 需求到任務的可追溯性
+- ✅ 比 Kiro 更快 - 配合 87 個 MCP 工具加速開發
+- ✅ 統一管理 - 所有文檔在 `rfp/` 目錄
+
+[→ 了解 Vibe Coding 詳細說明](rfp/README.md) | [→ 快速入門教程](QUICKSTART.md)
+
+### 🔔 2. 穩定可靠的通知系統
+**使用 Claude Code 官方 Hooks - 永不失效！**
+
+當需要您注意時，自動彈出桌面通知：
+- 💡 需要決策時
+- ⏸️ 等待超過 60 秒時
+- ✅ 任務完成時
+
+**為什麼穩定？**
+- 系統級 hooks，不受上下文壓縮影響
+- 即使 Claude 忘記，hooks 也會觸發
+- 零維護，完全自動化
+
+[→ 通知系統詳細配置](#通知系統配置)
+
+### 🧠 3. Claude Flow 完整集成
+**87 個 MCP 工具 + 17 種 SPARC 開發模式**
+
+- 🔄 記憶系統 - 保存開發進度和決策
+- 🐝 Hive-Mind - 多 Agent 協調開發
+- 🎯 SPARC 模式 - 專業化開發代理（架構師、程序員、測試工程師...）
+- 📊 BatchTool - 並行執行任務
+
+[→ Claude Flow 開發指南](CLAUDE.md)
+
+---
+
+## 🚀 快速開始（3 分鐘）
+
+### 方案 1：新專案（推薦）
 
 ```bash
+# 1. 克隆此倉庫
 git clone https://github.com/richblack/claude-flow-setting.git
+
+# 2. 執行設定腳本
 cd claude-flow-setting
 ./quick-setup.sh my_awesome_project
+
+# 3. 進入新專案
 cd my_awesome_project
+
+# 4. 在 Claude Code 中開啟並運行
+# /vibe-coding
 ```
 
-### 現有專案
+### 方案 2：現有專案
 
 ```bash
-git clone https://github.com/richblack/claude-flow-setting.git
+# 1. 在您的專案目錄中
 cd your-existing-project
+
+# 2. 執行設定腳本
 /path/to/claude-flow-setting/quick-setup.sh
+
+# 3. 在 Claude Code 中開啟並運行
+# /vibe-coding
 ```
 
 ---
 
-## 📦 設定完成後您會得到
+## 📁 專案結構
+
+設定完成後，您的專案將包含：
 
 ```
 your-project/
-├── rfp/
-│   └── requirements.md      # 📝 需求文件（您編輯這個）
-├── CLAUDE.md                # 🤖 Claude 開發指南
-├── .claude/
-│   └── settings.json        # ⚙️  通知 hooks 配置
-├── .gitignore               # 🚫 Git 忽略規則
-└── README.md                # 📖 專案說明
+├── 📚 文檔系統
+│   ├── README.md                    # 專案總覽（本文件）
+│   ├── CLAUDE.md                    # Claude 開發指南
+│   ├── QUICKSTART.md                # 快速入門教程
+│   └── rfp/                         # 需求和設計文檔
+│       ├── README.md                # Vibe Coding 使用說明
+│       ├── example-initial-requirements.md  # 示例需求
+│       ├── templates/               # 文檔模板
+│       ├── initial-requirements.md  # 原始需求（自動生成）
+│       ├── requirements.md          # User Stories + EARS（自動生成）
+│       ├── design.md                # 系統設計（自動生成）
+│       └── tasks.md                 # 任務列表（自動生成）
+│
+├── 🔧 配置文件
+│   ├── .claude/
+│   │   ├── commands/
+│   │   │   └── vibe-coding.md      # Vibe Coding 工作流
+│   │   └── settings.json            # 通知 hooks 配置
+│   └── .gitignore                   # Git 忽略規則
+│
+└── 💻 您的程式碼
+    └── ...
 ```
 
 ---
 
-## 💡 使用流程
+## 💡 典型工作流程
 
-### 1. 編輯需求
+### 第一天：創建需求
 
 ```bash
-# 在 rfp/requirements.md 中描述您的需求
-vim rfp/requirements.md
+# 在 Claude Code 中運行
+/vibe-coding
 ```
 
-### 2. 開始開發
+**AI 會引導您完成 5 個階段：**
 
-在 Claude Code 中開啟專案目錄，然後說：
+1. **理解需求** - 用自然語言描述您的想法
+2. **User Story Mapping** - AI 生成用戶故事
+3. **EARS 驗收標準** - 添加可測試的驗收標準
+4. **系統設計** - 生成架構和組件設計
+5. **任務分解** - 創建詳細的任務列表
 
+**輸出：** `rfp/` 目錄中的完整文檔
+
+### 第二天：開始實現
+
+```bash
+# 方式 1: 直接在 Claude Code 中
+# "請讀取 rfp/tasks.md，開始實現第一個任務"
+
+# 方式 2: 使用 Claude Flow SPARC 模式
+claude-flow sparc run architect "基於 rfp/design.md 實現架構"
+claude-flow sparc run coder "實現 rfp/tasks.md 中的任務"
+claude-flow sparc run tdd "建立測試套件"
 ```
-請閱讀 rfp/ 開始開發
+
+**自動通知：** Claude 需要您時會自動彈出通知 🔔
+
+### 每天結束
+
+```bash
+# 保存進度到記憶系統
+claude-flow memory store "progress" "$(date): 完成任務 1-3"
+
+# 提交代碼
+git add .
+git commit -m "完成用戶認證功能"
+git push
 ```
 
-### 3. 自動通知
+[→ 查看完整開發流程範例](CLAUDE.md#開發流程)
 
-當 Claude 需要您的注意時，會**自動彈出桌面通知**：
+---
 
-- 🔔 需要您確認決策時
-- ⏸️  等待超過 60 秒時
-- ✅ 任務完成時
+## 📖 文檔導航
 
-**重點**：這些通知使用 Claude Code 官方 hooks，**不會因上下文壓縮而失效**！
+### 新手入門
+- **[QUICKSTART.md](QUICKSTART.md)** - 3 分鐘快速入門教程
+- **[rfp/README.md](rfp/README.md)** - Vibe Coding 工作流詳細說明
+- **[rfp/example-initial-requirements.md](rfp/example-initial-requirements.md)** - 示例需求文件
+
+### 開發指南
+- **[CLAUDE.md](CLAUDE.md)** - Claude 開發指南（必讀！）
+  - Vibe Coding 工作流
+  - 通知系統說明
+  - 開發流程和最佳實踐
+  - SPARC 開發模式
+  - 記憶系統使用
+  - Hive-Mind 協調
+
+### 技術細節
+- **[.claude/commands/vibe-coding.md](.claude/commands/vibe-coding.md)** - Vibe Coding Slash Command 實現
+- **[rfp/templates/](rfp/templates/)** - 文檔生成模板
+
+---
+
+## 🎯 三種使用方式
+
+### 1. 純 Vibe Coding（推薦新手）
+適合：需求清晰，想要結構化文檔
+
+```bash
+/vibe-coding  # 生成完整文檔
+# 然後手動或用 AI 實現
+```
+
+### 2. Vibe Coding + Claude Code
+適合：個人開發者，快速迭代
+
+```bash
+/vibe-coding  # 生成文檔
+# "請讀取 rfp/tasks.md 並開始實現"
+```
+
+### 3. Vibe Coding + Claude Flow（推薦專業團隊）
+適合：複雜項目，需要多 Agent 協作
+
+```bash
+/vibe-coding  # 生成文檔
+
+# 使用 SPARC 專業模式
+claude-flow sparc run architect "..."
+claude-flow sparc run coder "..."
+
+# 或使用 Hive-Mind 並行開發
+claude-flow hive init --topology mesh --agents 3
+```
 
 ---
 
 ## 🔧 前置需求
 
 ### 必需
-
-- Claude Code CLI 已安裝
+- [Claude Code](https://claude.com/claude-code) 已安裝
 - Git
 
 ### 可選（通知功能）
-
-安裝系統通知工具以獲得最佳體驗：
-
 ```bash
 # macOS
 brew install terminal-notifier
@@ -95,198 +243,212 @@ brew install terminal-notifier
 sudo apt-get install libnotify-bin
 ```
 
-如果不安裝，通知會退化到終端訊息，功能仍可正常運作。
-
----
-
-## 📋 開發最佳實踐
-
-### 記憶系統
-
-Claude Flow 支援記憶功能，善用它來保存進度：
-
+### 可選（Claude Flow）
 ```bash
-# 開始工作時 - 恢復記憶
-claude-flow memory recall "*"
-
-# 重要決策記錄
-claude-flow memory store "architecture" "使用微服務架構"
-
-# 保存進度
-claude-flow memory store "progress" "完成用戶認證模組"
-
-# 結束工作時 - 查看所有記憶
-claude-flow memory query "*"
-```
-
-### SPARC 開發模式
-
-使用專業化的開發代理：
-
-```bash
-# 架構設計
-claude-flow sparc run architect "根據 rfp/ 設計系統架構"
-
-# 開發實作
-claude-flow sparc run coder "實作用戶認證功能"
-
-# 測試驅動開發
-claude-flow sparc run tdd "建立測試套件"
-
-# 安全稽核
-claude-flow sparc run security-review "檢查安全漏洞"
+# 安裝 Claude Flow 以使用進階功能
+# https://github.com/ruvnet/claude-flow
 ```
 
 ---
 
-## 🔔 通知系統運作原理
+## 🔔 通知系統配置
 
-### Claude Code 官方 Hooks
+### 自動通知觸發時機
 
-此專案使用 Claude Code 的官方 hooks 機制：
+| 時機 | Hook | 說明 |
+|------|------|------|
+| Claude 需要許可時 | Notification | 自動彈出通知 |
+| 等待超過 60 秒時 | Notification | 提醒您關注 |
+| 任務完成時 | Stop | 完成提示 |
 
-**配置檔案**: `.claude/settings.json`
+### 配置文件
+
+**位置：** `.claude/settings.json`
 
 ```json
 {
   "hooks": {
-    "Notification": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "terminal-notifier -message \"Claude Code 需要您的注意\" ..."
-          }
-        ]
-      }
-    ],
+    "Notification": [{
+      "matcher": "",
+      "hooks": [{
+        "type": "command",
+        "command": "terminal-notifier -message \"Claude Code 需要您的注意\" ..."
+      }]
+    }],
     "Stop": [...]
   }
 }
 ```
 
-### 觸發時機
-
-- **Notification Hook**: Claude 需要許可時，或閒置 60 秒時
-- **Stop Hook**: 任務完成時
-
 ### 為什麼穩定可靠？
 
-- ✅ 系統級別的 hook，不在 Claude 的上下文中
-- ✅ 即使上下文窗口被壓縮，hooks 仍會觸發
-- ✅ 不依賴 Claude 記得要發通知
+✅ **系統級別** - hooks 在 Claude Code 系統層運行
+✅ **不受上下文影響** - 即使上下文壓縮也能觸發
+✅ **零維護** - 完全自動化，無需手動調用
+
+[→ 通知系統故障排除](CLAUDE.md#特別注意)
+
+---
+
+## 🌟 核心優勢
+
+### vs Amazon Kiro IDE
+
+| 特性 | Kiro IDE | Claude Flow + Vibe Coding |
+|------|----------|---------------------------|
+| User Story Mapping | ✅ | ✅ |
+| EARS 驗收標準 | ✅ | ✅ |
+| 系統設計 | ✅ | ✅ |
+| 任務分解 | ✅ | ✅ |
+| 執行速度 | 較慢 | **快 10 倍**（87 個 MCP 工具） |
+| 集成能力 | 有限 | **強大**（Claude Flow 生態系統） |
+| 文檔管理 | 分散 | **統一**（rfp/ 目錄） |
+| 通知系統 | ❌ | **穩定可靠**（官方 hooks） |
+
+### 與傳統開發流程對比
+
+**傳統流程：**
+```
+需求文檔 → PRD → 技術設計 → 任務分解 → 開發 → 測試
+（每個階段需要不同工具和人員協調）
+```
+
+**Vibe Coding 流程：**
+```
+自然語言 → /vibe-coding → 5 階段互動 → 開始開發
+（一個工具，AI 引導，自動生成所有文檔）
+```
+
+---
+
+## 💻 實戰範例
+
+### 範例 1：待辦事項應用
+
+```bash
+# 1. 運行 Vibe Coding
+/vibe-coding
+
+# 2. 描述需求
+"我想創建一個待辦事項應用，用戶可以添加、編輯、刪除任務，
+可以設置優先級和截止日期，支持分類和標籤..."
+
+# 3. AI 引導您完成 5 個階段
+# 4. 生成完整文檔在 rfp/ 目錄
+# 5. 開始實現
+
+"請讀取 rfp/tasks.md，開始實現第一個任務"
+```
+
+[→ 查看完整示例](rfp/example-initial-requirements.md)
 
 ---
 
 ## 🛠 故障排除
 
-### 通知不出現？
-
-1. **檢查通知工具是否安裝**
-   ```bash
-   # macOS
-   which terminal-notifier
-
-   # Linux
-   which notify-send
-   ```
-
-2. **檢查系統通知權限**
-   - macOS: 系統偏好設定 → 通知
-   - Linux: 確認通知守護程式運行中
-
-3. **測試通知**
-   ```bash
-   # macOS
-   terminal-notifier -message "測試" -title "Claude Code"
-
-   # Linux
-   notify-send "Claude Code" "測試"
-   ```
-
-### Claude Flow 指令找不到？
-
-確認 Claude Flow 已正確安裝：
+### Q: 通知不出現？
 
 ```bash
+# 1. 檢查通知工具
+which terminal-notifier  # macOS
+which notify-send       # Linux
+
+# 2. 測試通知
+terminal-notifier -message "測試" -title "Claude Code"  # macOS
+notify-send "Claude Code" "測試"                      # Linux
+
+# 3. 檢查系統通知權限
+```
+
+[→ 詳細故障排除指南](CLAUDE.md#特別注意)
+
+### Q: Vibe Coding 工作流不知道如何開始？
+
+[→ 查看快速入門教程](QUICKSTART.md)
+
+### Q: Claude Flow 指令找不到？
+
+```bash
+# 確認是否安裝
 which claude-flow
 
 # 如果沒有，請安裝
-# 參考: https://github.com/ruvnet/claude-flow
+# https://github.com/ruvnet/claude-flow
 ```
 
-### 想要更豐富的通知？
+### Q: 想要修改生成的文檔？
 
-如果您想要智能音效選擇、自動 emoji 等進階功能，可以考慮安裝：
+直接編輯 `rfp/` 目錄中的 Markdown 文件即可！這些文件完全由您掌控。
 
+---
+
+## 🎓 學習資源
+
+### 官方文檔
+- [Claude Code 文檔](https://docs.claude.com/en/docs/claude-code)
+- [Claude Code Hooks](https://docs.claude.com/en/docs/claude-code/hooks)
+- [Claude Flow Wiki](https://github.com/ruvnet/claude-flow/wiki)
+- [SPARC 方法論](https://github.com/ruvnet/claude-flow/wiki/SPARC-Methodology)
+
+### 社區資源
+- [Claude Flow GitHub](https://github.com/ruvnet/claude-flow)
+- [此專案 GitHub](https://github.com/richblack/claude-flow-setting)
+
+### 相關項目
 - [cat-ccnotify-hook](https://github.com/nkygit/cat-ccnotify-hook) - 進階通知系統
 
-但基本版本已經足夠穩定可靠！
+---
+
+## 🤝 貢獻
+
+歡迎提交 Issue 和 Pull Request！
+
+### 開發計劃
+- [ ] 支持更多文檔模板
+- [ ] 集成更多 MCP 工具
+- [ ] 添加項目示例
+- [ ] 多語言支持
 
 ---
 
-## 🔗 相關資源
+## 📄 授權
 
-- **Claude Flow**: https://github.com/ruvnet/claude-flow
-- **Claude Code 文檔**: https://docs.claude.com/en/docs/claude-code
-- **此專案**: https://github.com/richblack/claude-flow-setting
+MIT License - 請自由使用和修改！
 
 ---
 
-## 📝 範例工作流程
+## ⭐ 核心理念
 
-### 早上開始工作
+**讓 AI 主導開發，您專注於決策**
 
-```bash
-cd my_project
+1. 💬 您用自然語言描述需求
+2. 🎨 Vibe Coding 生成結構化文檔
+3. 🤖 Claude 基於文檔開發
+4. 🔔 需要您時自動通知
+5. ✅ 您做決策和確認
+6. 💾 記憶系統保存進度
+7. 🔄 明天無縫繼續
 
-# 1. 恢復記憶
-claude-flow memory recall "*"
+---
 
-# 2. 在 Claude Code 中開啟專案
-# 3. 告訴 Claude: "請閱讀 rfp/ 繼續昨天的工作"
-```
-
-### 開發過程
-
-Claude 會自動：
-- 📖 閱讀 `rfp/requirements.md` 理解需求
-- 🏗️ 規劃架構
-- 💻 編寫程式碼
-- 🧪 建立測試
-- 🔔 需要您時自動通知
-
-您只需要：
-- ✅ 回應 Claude 的問題
-- ✅ 檢視和確認變更
-- ✅ 提供反饋
-
-### 晚上結束
+**現在就開始您的第一個 Vibe Coding 項目！** 🚀
 
 ```bash
-# 保存今日進度
-claude-flow memory store "daily" "$(date): 完成用戶認證和資料庫設計"
-
-# 提交變更
-git add .
-git commit -m "完成用戶認證功能"
-git push
+git clone https://github.com/richblack/claude-flow-setting.git
+cd claude-flow-setting
+./quick-setup.sh my_first_project
+cd my_first_project
+# 在 Claude Code 中運行: /vibe-coding
 ```
 
 ---
 
-## ⚡ 核心理念
+<div align="center">
 
-**讓 Claude 主導開發，您專注於決策**
+**版本 2.0** | **更新日期：2025-10-21**
 
-1. 📝 您寫需求 (`rfp/requirements.md`)
-2. 🤖 Claude 讀需求並開發
-3. 🔔 需要您時自動通知
-4. ✅ 您做決策和確認
-5. 💾 自動保存記憶
-6. 🔄 明天無縫繼續
+Made with ❤️ by the Claude Flow Community
 
----
+[🌟 Star](https://github.com/richblack/claude-flow-setting) | [🐛 Report Issue](https://github.com/richblack/claude-flow-setting/issues) | [💡 Request Feature](https://github.com/richblack/claude-flow-setting/issues)
 
-**就這麼簡單！一個指令，開始開發** 🎉
+</div>
