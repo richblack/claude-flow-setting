@@ -106,7 +106,7 @@ claude-flow hive init --topology mesh --agents 3
 
 ```bash
 # 啟動時 - 恢復記憶
-claude-flow memory recall "*"
+claude-flow memory export && cat memory-export-*.json
 
 # 閱讀需求
 # 請仔細閱讀 rfp/ 目錄中的所有需求文件
@@ -190,7 +190,7 @@ claude-flow memory store "issues" "資料庫連線池需要優化"
 claude-flow memory query "architecture"
 
 # 恢復所有記憶
-claude-flow memory recall "*"
+claude-flow memory export && cat memory-export-*.json
 ```
 
 ---
@@ -202,7 +202,7 @@ claude-flow memory recall "*"
 如果忘記之前的工作：
 ```bash
 # 立即執行
-claude-flow memory recall "*"
+claude-flow memory export && cat memory-export-*.json
 
 # 重新閱讀需求
 # 查看 rfp/requirements.md

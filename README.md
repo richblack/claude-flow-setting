@@ -99,7 +99,7 @@ cd existing-project
 cd my-shop-project
 
 # 恢復記憶，讓 Claude 知道昨天做了什麼
-claude-flow memory recall "*"
+claude-flow memory export && cat memory-export-*.json
 ```
 
 在 Claude Code 中說：「請閱讀 rfp/ 繼續昨天的工作」
@@ -188,7 +188,7 @@ claude-flow memory store "progress" "$(date): 完成購物車、建立部落格 
 git add . && git commit -m "今日進度" && git push
 ```
 
-明天來，只要 `claude-flow memory recall "*"`，就能無縫接續！
+明天來，只要 `claude-flow memory export && cat memory-export-*.json`，就能無縫接續！
 
 ---
 
@@ -228,7 +228,7 @@ Claude Flow 支援記憶功能，善用它來保存進度：
 
 ```bash
 # 開始工作時 - 恢復記憶
-claude-flow memory recall "*"
+claude-flow memory export && cat memory-export-*.json
 
 # 重要決策記錄
 claude-flow memory store "architecture" "使用微服務架構"
@@ -236,8 +236,8 @@ claude-flow memory store "architecture" "使用微服務架構"
 # 保存進度
 claude-flow memory store "progress" "完成用戶認證模組"
 
-# 結束工作時 - 查看所有記憶
-claude-flow memory query "*"
+# 結束工作時 - 查看記憶統計
+claude-flow memory stats
 ```
 
 ### SPARC 開發模式
