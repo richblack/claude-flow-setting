@@ -1,5 +1,5 @@
 ---
-description: Vibe Coding 智能需求工作流程 - 從自然語言需求轉換為可執行任務（User Story → EARS → 系統設計 → 任務分解）
+description: "從自然語言需求到可執行實作計畫的智能工作流程 (User Story → EARS → 設計 → 任務分解)"
 ---
 
 # Vibe Coding - 智能需求到實作工作流程
