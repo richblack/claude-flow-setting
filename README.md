@@ -309,15 +309,34 @@ claude-flow swarm status
 
 ### 如何使用？
 
-#### 方法 1: 使用 Slash Command（推薦）
+> ⚠️ **重要提醒 (2025-01-26)**：VSCode Extension 2.0.27 目前存在 bug，無法載入自定義 slash commands。
+>
+> **暫時解決方案**：請使用 Terminal 中的 Claude CLI
+> ```bash
+> # 在專案目錄中執行
+> claude
+> # 然後輸入 /vibe-coding
+> ```
+>
+> **症狀判斷**：如果你在 VSCode Extension 中輸入 `/` 只看到 10 個內建指令（如 /compact, /context, /cost 等），但看不到 `/vibe-coding`，就是遇到這個 bug。
+>
+> **好消息**：Terminal CLI 版本 (2.0.26) 完全正常，所有自定義指令都能使用！
 
-在 Claude Code 中執行：
+#### 方法 1: 使用 Slash Command（推薦 - Terminal CLI）
+
+在 VSCode 的 Terminal 中執行：
+
+```bash
+claude
+```
+
+然後在 Claude CLI 中輸入：
 
 ```
 /vibe-coding
 ```
 
-然後按照提示逐步完成 5 個階段。
+按照提示逐步完成 5 個階段。
 
 #### 方法 2: 手動建立需求文件
 
