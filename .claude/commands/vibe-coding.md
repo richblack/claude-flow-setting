@@ -1,4 +1,5 @@
 ---
+name: vibe-coding
 description: "從自然語言需求到可執行實作計畫的智能工作流程 (User Story → EARS → 設計 → 任務分解)"
 ---
 
