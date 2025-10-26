@@ -1,0 +1,22 @@
+{
+  "default": [
+    {
+      "key": "voice_path_fix",
+      "value": "claude-code-voice 專案已修正路徑問題：claude_notify.py 第11行改用 Path(__file__).parent 取代硬編碼的 ~/.claude-code-tools 路徑，解決了路徑相依性問題",
+      "namespace": "default",
+      "timestamp": 1757672718234
+    },
+    {
+      "key": "architecture_improvement",
+      "value": "Claude Flow Setting 架構改進完成：從專案內重複安裝改為全域共享 ~/Documents/claude-code-voice，建立符號連結 ~/.claude-code-tools 解決相容性，更新 CLAUDE.md 為輕量化版本，新增智能路徑檢測的 voice_notify 快捷指令",
+      "namespace": "default",
+      "timestamp": 1757672724687
+    },
+    {
+      "key": "voice_system_status",
+      "value": "語音通知系統正常運作：小西語音輸出成功，配置為中文(zh-TW)，語速180，包含情緒前綴，支援 urgent/gentle/excited/worried/thinking 五種情緒類型，已推送到 GitHub main 分支 commit 109401d",
+      "namespace": "default",
+      "timestamp": 1757672729911
+    }
+  ]
+}

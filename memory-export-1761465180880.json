@@ -1,0 +1,52 @@
+{
+  "default": [
+    {
+      "key": "voice_path_fix",
+      "value": "claude-code-voice 專案已修正路徑問題：claude_notify.py 第11行改用 Path(__file__).parent 取代硬編碼的 ~/.claude-code-tools 路徑，解決了路徑相依性問題",
+      "namespace": "default",
+      "timestamp": 1757672718234
+    },
+    {
+      "key": "architecture_improvement",
+      "value": "Claude Flow Setting 架構改進完成：從專案內重複安裝改為全域共享 ~/Documents/claude-code-voice，建立符號連結 ~/.claude-code-tools 解決相容性，更新 CLAUDE.md 為輕量化版本，新增智能路徑檢測的 voice_notify 快捷指令",
+      "namespace": "default",
+      "timestamp": 1757672724687
+    },
+    {
+      "key": "voice_system_status",
+      "value": "語音通知系統正常運作：小西語音輸出成功，配置為中文(zh-TW)，語速180，包含情緒前綴，支援 urgent/gentle/excited/worried/thinking 五種情緒類型，已推送到 GitHub main 分支 commit 109401d",
+      "namespace": "default",
+      "timestamp": 1757672729911
+    },
+    {
+      "key": "vibe-coding-improvements",
+      "value": "Vibe Coding 工作流程重大改進完成：(1) 強化互動式流程 - 每個階段都有明確的暫停點和等待確認機制，防止 Claude 一次性完成所有階段 (2) 新增智能進度檢測 - 自動偵測已完成的階段，可從中斷處恢復，無需重新執行 (3) 目錄結構重組 - 分離 user-requirements/ (用戶輸入) 和 rfp/ (AI 輸出)，防止檔案名稱衝突 (4) 防止資料覆蓋 - init 腳本新增檔案存在檢查，不會覆蓋已有內容。commits: 3eec0ef, 8d47932, ae68002",
+      "namespace": "default",
+      "timestamp": 1761108859863
+    },
+    {
+      "key": "directory-structure",
+      "value": "Claude Flow Setting 最新目錄結構：user-requirements/ (用戶編寫的需求、參考資料、mockups、docs，.gitignore 忽略個人內容) 和 rfp/ (AI 產生的 requirements.md, design.md, tasks.md，追蹤在 git)。這個設計解決了用戶和 AI 都寫 requirements.md 造成的混淆問題",
+      "namespace": "default",
+      "timestamp": 1761108867545
+    },
+    {
+      "key": "critical-fixes",
+      "value": "緊急修復的資料覆蓋問題：init 腳本原本使用 'cat >' 無條件覆蓋檔案，導致用戶的 requirements.md 被空白模板覆蓋（用戶稱為「慘劇」）。現在所有檔案創建都加上 [[ \\! -f ]] 檢查，並顯示明確訊息告知是新建還是跳過。commit: b10697c",
+      "namespace": "default",
+      "timestamp": 1761108874282
+    },
+    {
+      "key": "session-2025-01-22",
+      "value": "完成 Vibe Coding 重大改進：(1) 修正記憶指令 recall 改為 export (2) 重新設計工作流程為直接寫檔模式，不在對話中展示內容 (3) 新增跨階段同步更新機制，修改任何階段會自動同步所有相關檔案 (4) 用戶的 ~/claude-flow-setting 已更新到最新版 3f4b584，下次在專案中執行 init 即可獲得所有改進。commits: 235b83a, 3f4b584",
+      "namespace": "default",
+      "timestamp": 1761120138341
+    },
+    {
+      "key": "vibe-coding-frontmatter-fix",
+      "value": "關鍵修復完成：發現 /vibe-coding 指令無法使用的根本原因是缺少 frontmatter。根據 Claude Code 官方文檔，slash commands 必須在檔案開頭包含 YAML frontmatter 並有 description 欄位。已在 vibe-coding.md 開頭新增 frontmatter，commit: c89d52a。用戶即將重啟 Claude Code 測試指令是否可見。",
+      "namespace": "default",
+      "timestamp": 1761465058876
+    }
+  ]
+}
