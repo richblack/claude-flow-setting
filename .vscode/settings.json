@@ -1,0 +1,9 @@
+{
+  "claude.commandsPath": ".claude/commands",
+  "claude.configPath": ".claude",
+  "files.associations": {
+    "*.md": "markdown"
+  },
+  "claude.enableSlashCommands": true,
+  "claude.workspaceRoot": "."
+}

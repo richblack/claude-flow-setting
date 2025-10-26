@@ -1,0 +1,23 @@
+{
+  "folders": [
+    {
+      "name": "Claude Flow Settings",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "claude.commandsPath": ".claude/commands",
+    "claude.configPath": ".claude",
+    "claude.enableSlashCommands": true,
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/.git": true,
+      "**/.DS_Store": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "anthropic.claude-dev"
+    ]
+  }
+}
